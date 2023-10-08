@@ -1,0 +1,51 @@
+# Fichiers spécifiques à Laravel
+.env
+.env.backup
+.env.local
+.env.testing
+.env.production
+.env.staging
+.env.dusk.local
+.env.dusk.testing
+.env.dusk.production
+.env.dusk.staging
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/node_modules
+/.phpunit.result.cache
+/homestead.yaml
+/Homestead.json
+/nbproject/Private/
+/phpunit.xml
+
+# Fichiers et dossiers générés
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.log
+*.sqlite
+*.tar
+*.tar.gz
+*.zip
+*.exe
+*.out
+*.pid
+*.seed
+*.pid.lock
+
+# OS généré
+ehthumbs.db
+Thumbs.db
+
+# Autres fichiers et dossiers courants à ignorer
+*.bak
+*.cache
+*.DS_Store
+*.log
+*.swp
+*.lock
