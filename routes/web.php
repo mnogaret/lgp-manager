@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonneController;
+use App\Http\Controllers\GoogleAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +15,11 @@ use App\Http\Controllers\PersonneController;
 |
 */
 
-Route::get('/', function () {
-    return view('/welcome');
+Route::get('/login', [GoogleAuthController::class, 'redirectToGoogle'])->name('login');
+Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('/welcome');
+    });
+    Route::resource('personne', PersonneController::class);
 });
-Route::resource('personne', PersonneController::class);
