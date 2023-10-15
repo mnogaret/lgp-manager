@@ -185,4 +185,8 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    /*
+     | Spécifique à l'application
+     */
+    'google_auth_enabled' => env('GOOGLE_AUTH_ENABLED', 'true'),
 ];

@@ -12,6 +12,20 @@ class GoogleAuthController extends Controller
     public function redirectToGoogle()
     {
         session(['url.intended' => url()->previous()]);
+
+        if (!config('app.google_auth_enabled')) {
+            // Ici, vous pouvez rediriger vers une page d'erreur ou simplement authentifier l'utilisateur localement sans passer par Google.
+            $user = User::where('email', "utilisateur@example.com")->first();
+            if (!$user) {
+                $user = User::create([
+                    'name' => "Utilisateur",
+                    'email' => "utilisateur@example.com",
+                ]);
+            }
+            Auth::login($user, true);
+            return redirect()->intended('/'); // ou toute autre action que vous souhaitez effectuer
+        }
+
         return Socialite::driver('google')->redirect();
     }
     
