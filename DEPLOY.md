@@ -7,3 +7,7 @@ composer install --optimize-autoloader --no-dev
 Lancer Docker Desktop
 
 docker-compose up -d
+
+# Commandes artisan
+
+docker-compose exec web php artisan migrate

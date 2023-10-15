@@ -18,4 +18,4 @@ use App\Http\Controllers\PostController;
 Route::get('/', function () {
     return view('/welcome');
 });
-Route::get('/post/{id}', [PostController::class, 'show']);
+Route::resource('personnes', PersonneController::class);
