@@ -11,6 +11,6 @@ git reset --hard origin/main
 
 # Synchronisation avec rsync
 #rsync -avzp -vvv --chmod=Dug=rwx,Do=,Fug=rw,Fo= --delete --exclude='.env' $LOCAL_PATH $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
-rsync -avzp -vvv --no-perms --delete --exclude='.env' $LOCAL_PATH $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
+rsync -avzp -vvv --no-perms --delete --exclude='.env' --exclude='node_modules' $LOCAL_PATH $REMOTE_USER@$REMOTE_HOST:$REMOTE_PATH
 
 echo "Déploiement terminé."
