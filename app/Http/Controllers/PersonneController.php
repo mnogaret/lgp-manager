@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Personne;
 
 class PersonneController extends Controller
 {
@@ -35,7 +36,8 @@ class PersonneController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $personne = Personne::with('membresDuFoyer')->find($id);
+        return view('personne.show', compact('personne'));
     }
 
     /**

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('nationalite')->nullable();
             $table->string('ville_naissance')->nullable();
             $table->string('numero_licence')->nullable();
+            $table->unsignedBigInteger('chef_de_foyer_id')->nullable();
+            $table->foreign('chef_de_foyer_id')->references('id')->on('personne')->onDelete('set null');
             $table->timestamps();
         });
     }

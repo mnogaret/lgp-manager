@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdherentController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\PersonneController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +17,4 @@ use App\Http\Controllers\PostController;
 Route::get('/', function () {
     return view('/welcome');
 });
-Route::resource('personnes', PersonneController::class);
+Route::resource('personne', PersonneController::class);
