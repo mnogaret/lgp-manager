@@ -2,14 +2,17 @@ version: '3'
 
 services:
   web:
-    image: php:8.2-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
+      - ./my-apache-config.conf:/etc/apache2/sites-available/000-default.conf
     ports:
       - "8000:80"
     depends_on:
       - db
-
+    command: ["apache2-foreground", "-D", "FOREGROUND", "-D", "ALLOW_OVERRIDE=All"]
   db:
     image: mysql:5.7
     ports:

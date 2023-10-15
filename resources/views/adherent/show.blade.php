@@ -1,0 +1,1 @@
+<h1>{{ $adherent->title }}</h1>
