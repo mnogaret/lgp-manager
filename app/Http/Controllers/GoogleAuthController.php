@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Socialite;
+use Laravel\Socialite\Facades\Socialite;
 
 class GoogleAuthController extends Controller
 {
@@ -18,12 +17,14 @@ class GoogleAuthController extends Controller
             $user = User::where('email', "utilisateur@example.com")->first();
             if (!$user) {
                 $user = User::create([
-                    'name' => "Utilisateur",
+                    'first_name' => "Util",
+                    'last_name' => "Isateur",
                     'email' => "utilisateur@example.com",
+                    'avatar' => "https://images.unsplash.com/photo-1502378735452-bc7d86632805"
                 ]);
             }
             Auth::login($user, true);
-            return redirect()->intended('/'); // ou toute autre action que vous souhaitez effectuer
+            return redirect()->intended('/');
         }
 
         return Socialite::driver('google')->redirect();
@@ -39,17 +40,24 @@ class GoogleAuthController extends Controller
         $user = User::where('email', $googleUser->email)->first();
 
         // Si l'utilisateur n'existe pas, créez-le
-//        if (!$user) {
-//            $user = User::create([
-//                'name' => $googleUser->name,
-//                'email' => $googleUser->email,
-//                // ... autres champs que vous souhaitez stocker
-//            ]);
-//        }
+        if (!$user) {
+            $user = User::create([
+                'first_name' => $googleUser->user->given_name,
+                'last_name' => $googleUser->user->family_name,
+                'email' => $googleUser->email,
+                'avatar' => $googleUser->avatar,
+            ]);
+        }
 
         // Authentifiez l'utilisateur
         Auth::login($user, true);
 
-        return redirect()->intended('/'); // '/' est l'URL par défaut si aucune URL d'origine n'est trouvée
+        return redirect()->intended('/');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->intended('/');
     }
 }

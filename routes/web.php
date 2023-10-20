@@ -17,6 +17,7 @@ use App\Http\Controllers\GoogleAuthController;
 
 Route::get('/login', [GoogleAuthController::class, 'redirectToGoogle'])->name('login');
 Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+Route::get('/logout', [GoogleAuthController::class, 'logout']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('/welcome');
