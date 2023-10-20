@@ -38,14 +38,14 @@ class GoogleAuthController extends Controller
         $user = User::where('email', $googleUser->email)->first();
 
         // Si l'utilisateur n'existe pas, créez-le
-        if (!$user) {
-            $user = User::create([
-                'email' => $googleUser->email,
-                'first_name' => $googleUser->user['given_name'],
-                'last_name' => $googleUser->user['family_name'],
-                'avatar' => $googleUser->user['picture'],
-            ]);
-        }
+//        if (!$user) {
+//            $user = User::create([
+//                'email' => $googleUser->email,
+//                'first_name' => $googleUser->user['given_name'],
+//                'last_name' => $googleUser->user['family_name'],
+//                'avatar' => $googleUser->user['picture'],
+//            ]);
+//        }
 
         // Authentifiez l'utilisateur
         Auth::login($user, true);
@@ -56,6 +56,6 @@ class GoogleAuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect()->intended('/');
+        return redirect()->away('https://accounts.google.com/Logout');
     }
 }
