@@ -17,9 +17,9 @@ class GoogleAuthController extends Controller
             $user = User::where('email', "utilisateur@example.com")->first();
             if (!$user) {
                 $user = User::create([
+                    'email' => "utilisateur@example.com",
                     'first_name' => "Util",
                     'last_name' => "Isateur",
-                    'email' => "utilisateur@example.com",
                     'avatar' => "https://images.unsplash.com/photo-1502378735452-bc7d86632805"
                 ]);
             }
@@ -40,10 +40,10 @@ class GoogleAuthController extends Controller
         // Si l'utilisateur n'existe pas, créez-le
         if (!$user) {
             $user = User::create([
-                'first_name' => $googleUser->user->given_name,
-                'last_name' => $googleUser->user->family_name,
                 'email' => $googleUser->email,
-                'avatar' => $googleUser->avatar,
+                'first_name' => $googleUser->user['given_name'],
+                'last_name' => $googleUser->user['family_name'],
+                'avatar' => $googleUser->user['avatar'],
             ]);
         }
 
