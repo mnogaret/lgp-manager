@@ -43,7 +43,7 @@ class GoogleAuthController extends Controller
                 'email' => $googleUser->email,
                 'first_name' => $googleUser->user['given_name'],
                 'last_name' => $googleUser->user['family_name'],
-                'avatar' => $googleUser->user['avatar'],
+                'avatar' => $googleUser->user['picture'],
             ]);
         }
 
