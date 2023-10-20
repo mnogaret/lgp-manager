@@ -33,6 +33,8 @@ class GoogleAuthController extends Controller
     {
         $googleUser = Socialite::driver('google')->user();
 
+        dd($googleUser);
+
         // Recherchez l'utilisateur dans votre base de données par e-mail
         $user = User::where('email', $googleUser->email)->first();
 
