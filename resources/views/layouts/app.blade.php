@@ -32,35 +32,35 @@ use Illuminate\Support\Facades\Auth;
           </a>
           <ul class="mt-6">
             <?php 
-              $current = 'Dashboard';
+              $current = Request::route()->uri;
               $menu = [
                 [
                   'icon' => 'icon-home.svg',
-                  'url' => '#',
+                  'url' => '/',
                   'name' => 'Dashboard'
                 ],
                 [
                   'icon' => 'icon-form.svg',
-                  'url' => '#',
+                  'url' => 'adherents',
                   'name' => 'Adhérents'
                 ],
                 [
                   'icon' => 'icon-stats.svg',
-                  'url' => '#',
+                  'url' => 'stats',
                   'name' => 'Statistiques'
                 ]
               ];
               foreach ($menu as $lien):
             ?>
             <li class="relative px-6 py-3">
-              <?php if ($current === $lien['name']): ?>
+              <?php if ($current === $lien['url']): ?>
               <span
                 class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                 aria-hidden="true"
               ></span>
               <?php endif; ?>
               <a
-                class="inline-flex items-center w-full text-sm font-semibold {{ $current === $lien['name'] ? 'text-gray-800 dark:text-gray-100' : '' }} transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                class="inline-flex items-center w-full text-sm font-semibold {{ $current === $lien['url'] ? 'text-gray-800 dark:text-gray-100' : '' }} transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                 href="{{ $lien['url'] }}"
               >
                 <?php echo file_get_contents(public_path('assets/img/' . $lien['icon'])); ?>

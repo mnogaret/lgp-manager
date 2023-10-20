@@ -22,5 +22,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('/welcome');
     });
+    Route::get('/adherents', function () {
+        return view('/adherents');
+    });
+    Route::get('/stats', function () {
+        return view('/stats');
+    });
     Route::resource('personne', PersonneController::class);
 });
