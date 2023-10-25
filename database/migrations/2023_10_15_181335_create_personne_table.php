@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('code_postal')->nullable();
             $table->string('ville')->nullable();
             $table->date('date_naissance')->nullable();
-            $table->char('sexe', 1)->nullable(); // M ou F
+            $table->enum('sexe', ['M', 'F'])->nullable(); // M ou F
             $table->string('nationalite')->nullable();
             $table->string('ville_naissance')->nullable();
             $table->string('numero_licence')->nullable();

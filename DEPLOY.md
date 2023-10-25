@@ -11,3 +11,4 @@ docker-compose up -d
 # Commandes artisan
 
 docker-compose exec web php artisan migrate
+docker-compose exec web php artisan db:seed --class=SaisonSeeder

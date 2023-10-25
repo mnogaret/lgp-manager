@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
       src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
       defer
     ></script>
+    <link href="../assets/css/flowbite.min.css" rel="stylesheet" />
+    <script src="../assets/js/flowbite.min.js"></script>
     <script src="../assets/js/init-alpine.js"></script>
   </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
@@ -43,11 +45,16 @@ use Illuminate\Support\Facades\Auth;
                   'icon' => 'icon-form.svg',
                   'url' => 'adherents',
                   'name' => 'Adhérents'
-                ],
+                  ],
                 [
                   'icon' => 'icon-stats.svg',
                   'url' => 'stats',
                   'name' => 'Statistiques'
+                  ],
+                [
+                  'icon' => 'icon-admin.svg',
+                  'url' => 'admin',
+                  'name' => 'Administration'
                 ]
               ];
               foreach ($menu as $lien):

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdherentController;
 use App\Http\Controllers\PersonneController;
 use App\Http\Controllers\GoogleAuthController;
 
@@ -28,5 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/stats', function () {
         return view('/stats');
     });
+    Route::get('/admin', function () {
+        return view('/admin');
+    });
     Route::resource('personne', PersonneController::class);
+
+    Route::post('/import-adherents', [AdherentController::class, 'import'])->name('import-adherents');
 });
