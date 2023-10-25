@@ -9,4 +9,6 @@ class Adhesion extends Model
 {
     protected $table = 'adhesion';
     use HasFactory;
+
+    protected $fillable = ['personne_id', 'date_creation_dossier', 'groupe_id', 'etat'];
 }

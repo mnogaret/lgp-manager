@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tools\CsvParser;
+use App\Tools\AdherentImporter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -76,13 +76,9 @@ class AdherentController extends Controller
             return redirect()->back()->withErrors($validator);
         }
         $path = $request->file('csv_file')->getRealPath();
-        $content = CsvParser::parse_csv(file_get_contents($path));
-        foreach ($content as $raw_adherent) {
-            $nom = $raw_adherent['Nom'];
-            $prenom = $raw_adherent['Prénom'];
-            $date_naissance = $raw_adherent['Date de naissance'];
-        }
+        $importer = new AdherentImporter();
+        $importer->from_csv(file_get_contents($path));
 
-        return redirect()->back()->with('success', 'Todo !');
+        return redirect()->back()->with('success', print_r($importer->traces, true));
     }
 }

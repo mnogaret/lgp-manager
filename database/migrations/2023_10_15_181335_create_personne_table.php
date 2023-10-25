@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('ville')->nullable();
             $table->date('date_naissance')->nullable();
             $table->enum('sexe', ['M', 'F'])->nullable(); // M ou F
-            $table->string('nationalite')->nullable();
+            $table->enum('nationalite', ['Allemand', 'Américain', 'Brésilien', 'Canadien', 'Chinois', 'Espagnol', 'Estonien', 'Français', 'Lésothien', 'Libanais', 'Lituanien', 'Marocain', 'Russe', 'Suédois', 'Tunisien', 'Ukrainien'])->nullable();
             $table->string('ville_naissance')->nullable();
             $table->string('numero_licence')->nullable();
             $table->unsignedBigInteger('chef_de_foyer_id')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
         });
     }
 
-    /**
+/**
      * Reverse the migrations.
      */
     public function down(): void

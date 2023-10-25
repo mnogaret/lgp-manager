@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('personne_id')->constrained('personne');
             $table->date('date_creation_dossier');
             $table->foreignId('groupe_id')->constrained('groupe');
-            $table->enum('etat', ['validé', 'réglé', 'complet', 'liste d’attente', 'pré-inscription']);
+            $table->enum('etat', ['validé', 'réglé', 'complet', 'liste d’attente', 'créé']);
             $table->timestamps();
         });
     }
