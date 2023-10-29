@@ -3,6 +3,7 @@
 namespace App\Tools;
 
 use App\Models\Adhesion;
+use App\Models\Foyer;
 use App\Models\Groupe;
 use App\Models\Personne;
 use DateTime;
@@ -17,6 +18,7 @@ class AdherentImporter
         'changedPersonne' => 0,
         'existingAdhesion' => 0,
         'newAdhesion' => 0,
+        'newFoyer' => 0,
         'diff' => [],
     ];
     public function from_csv($text_content)
@@ -52,15 +54,20 @@ class AdherentImporter
                     'telephone1' => $this->format_telephone($raw_adherent['P1 Téléphone']),
                 ]
             );
-            $this->create_personne(
+            $foyer_id = $parent1?->foyer_id;
+            $parent2 = $this->create_personne(
                 [
                     'nom' => mb_strtoupper($raw_adherent['P2 Nom']),
                     'prenom' => mb_convert_case(mb_strtolower($raw_adherent['P2 Prénom']), MB_CASE_TITLE),
                     'email1' => $this->is_email($raw_adherent['P2 Adresse email']) ? $raw_adherent['P2 Adresse email'] : null,
                     'telephone1' => $this->format_telephone($raw_adherent['P2 Téléphone']),
-                    'chef_de_foyer_id' => $parent1?->id,
+                    'foyer_id' => $foyer_id,
                 ]
             );
+            if (!$foyer_id) {
+                $foyer_id = $parent2?->foyer_id;
+            }
+
             $adherent = $this->create_personne(
                 [
                     'nom' => mb_strtoupper($raw_adherent['Nom']),
@@ -77,20 +84,12 @@ class AdherentImporter
                     'nationalite' => $this->format_nationalite($raw_adherent['Nationalité']),
                     'ville_naissance' => $raw_adherent['Lieu de naissance'],
                     'numero_licence' => $raw_adherent['N° Licence'],
-                    'chef_de_foyer_id' => $parent1?->id,
+                    'foyer_id' => $foyer_id,
                 ],
             );
 
             foreach ($this->get_groupe_code($raw_adherent['Groupe'], $raw_adherent['Créneaux']) as $code) {
-                $groupe = $groupes[$code];
-                $this->create_adhesion(
-                    [
-                        'personne_id' => $adherent->id,
-                        'date_creation_dossier' => $this->format_date_time($raw_adherent['Horodateur']),
-                        'groupe_id' => $groupe->id,
-                        'etat' => 'créé',
-                    ]
-                );
+                $this->create_adhesion($adherent, $groupes[$code], $this->format_date_time($raw_adherent['Horodateur']));
             }
         }
     }
@@ -203,8 +202,15 @@ class AdherentImporter
         return $telephone;
     }
 
-    private function create_adhesion($data)
+    private function create_adhesion($adherent, $groupe, $date)
     {
+        $data = [
+            'personne_id' => $adherent->id,
+            'date_creation_dossier' => $date,
+            'groupe_id' => $groupe->id,
+            'etat' => 'créé',
+        ];
+
         $adhesion = Adhesion::where('personne_id', $data['personne_id'])->where('groupe_id', $data['groupe_id'])->first();
         if ($adhesion) {
             $this->traces['existingAdhesion']++;
@@ -225,6 +231,11 @@ class AdherentImporter
             return $personne;
         }
         $this->traces['newPersonne']++;
+        if (!isset($data['foyer_id'])) {
+            $this->traces['newFoyer']++;
+            $foyer = Foyer::create();
+            $data['foyer_id'] = $foyer->id;
+        }
         return Personne::create($data);
     }
 

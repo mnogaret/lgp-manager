@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('personne', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('foyer_id');
             $table->string('nom');
             $table->string('prenom');
             $table->string('email1')->nullable();
@@ -27,8 +28,7 @@ return new class extends Migration
             $table->enum('nationalite', ['Allemand', 'Américain', 'Brésilien', 'Canadien', 'Chinois', 'Espagnol', 'Estonien', 'Français', 'Lésothien', 'Libanais', 'Lituanien', 'Marocain', 'Russe', 'Suédois', 'Tunisien', 'Ukrainien'])->nullable();
             $table->string('ville_naissance')->nullable();
             $table->string('numero_licence')->nullable();
-            $table->unsignedBigInteger('chef_de_foyer_id')->nullable();
-            $table->foreign('chef_de_foyer_id')->references('id')->on('personne')->onDelete('set null');
+            $table->foreign('foyer_id')->references('id')->on('foyer');
             $table->timestamps();
         });
     }

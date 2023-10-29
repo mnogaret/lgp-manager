@@ -32,11 +32,19 @@ docker-compose exec web php artisan key:generate
 docker-compose exec web php artisan migrate
 docker-compose exec web php artisan db:seed --class=SaisonSeeder
 
-# TODO
+# DONE
 
 - Nettoyer le bazar que m'a mis WindMill
 - Paufiner le layout
 - Faire un dashboard minimal avec rien dedans
 - Page d'import de personnes
-- Page de recherche de personnes
+- Notion de foyer
+
+# TODO
+
 - Page d'affichage de personnes
+- Notion de paiement
+- Notion de pièces de dossier
+- Notion de pièces manquantes
+- Commentaires
+- Page de recherche de personnes
