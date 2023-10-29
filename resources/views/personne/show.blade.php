@@ -17,14 +17,5 @@
     <p><strong>Code postal :</strong> {{ $personne->code_postal }}</p>
     <p><strong>Ville :</strong> {{ $personne->ville }}</p>
     <p><strong>Numéro de licence :</strong> {{ $personne->numero_licence }}</p>
-
-    @if($personne->chef_de_foyer_id === $personne->id)
-        <h2>Membres du foyer</h2>
-        <ul>
-        @foreach($personne->membresDuFoyer as $membre)
-            <li>{{ $membre->prenom }} {{ $membre->nom }}</li>
-        @endforeach
-        </ul>
-    @endif
 </div>
 @endsection

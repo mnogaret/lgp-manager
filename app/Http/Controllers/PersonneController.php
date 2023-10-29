@@ -41,8 +41,11 @@ class PersonneController extends Controller
      */
     public function show(string $id)
     {
-        $personne = Personne::with('membresDuFoyer')->find($id);
-        return view('personne.show', compact('personne'));
+        // Récupérer la personne depuis la base de données
+        $personne = Personne::findOrFail($id);
+
+        // Passer la personne à la vue et l'afficher
+        return view('personne.show', ['personne' => $personne]);
     }
 
     /**
