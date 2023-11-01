@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Personne;
 use App\Tools\AdherentImporter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,8 @@ class AdherentController extends Controller
      */
     public function index()
     {
-        //
+        $adherents = Personne::with('adhesions.groupe')->has('adhesions')->get();
+        return view('adherent.index', ['adherents' => $adherents]);
     }
 
     /**
@@ -42,6 +44,11 @@ class AdherentController extends Controller
      */
     public function show(string $id)
     {
+        // Récupérer la personne depuis la base de données
+        $adherent = Personne::with('adhesions.groupe')->findOrFail($id);
+
+        // Passer la personne à la vue et l'afficher
+        return view('adherent.show', ['adherent' => $adherent]);
     }
 
     /**

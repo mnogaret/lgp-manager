@@ -23,15 +23,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('/welcome');
     });
-    Route::get('/adherents', function () {
-        return view('/adherents');
-    });
     Route::get('/stats', function () {
         return view('/stats');
     });
     Route::get('/admin', function () {
         return view('/admin');
     });
+    Route::resource('adherent', AdherentController::class);
     Route::resource('personne', PersonneController::class);
 
     Route::post('/import-adherents', [AdherentController::class, 'import'])->name('import-adherents');

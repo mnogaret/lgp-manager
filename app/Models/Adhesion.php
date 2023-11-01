@@ -11,4 +11,9 @@ class Adhesion extends Model
     use HasFactory;
 
     protected $fillable = ['personne_id', 'date_creation_dossier', 'groupe_id', 'etat'];
+
+    public function groupe()
+    {
+        return $this->belongsTo(Groupe::class);
+    }
 }
