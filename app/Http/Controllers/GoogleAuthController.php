@@ -29,7 +29,7 @@ class GoogleAuthController extends Controller
 
         return Socialite::driver('google')->redirect();
     }
-    
+
     public function handleGoogleCallback()
     {
         $googleUser = Socialite::driver('google')->user();
@@ -38,14 +38,14 @@ class GoogleAuthController extends Controller
         $user = User::where('email', $googleUser->email)->first();
 
         // Si l'utilisateur n'existe pas, créez-le
-//        if (!$user) {
-//            $user = User::create([
-//                'email' => $googleUser->email,
-//                'first_name' => $googleUser->user['given_name'],
-//                'last_name' => $googleUser->user['family_name'],
-//                'avatar' => $googleUser->user['picture'],
-//            ]);
-//        }
+        if (!$user) {
+            return abort(403, 'Vous n’avez pas l’autorisation d’accéder à cette page.');
+        }
+        $user->update([
+            'first_name' => $googleUser->user['given_name'],
+            'last_name' => $googleUser->user['family_name'],
+            'avatar' => $googleUser->user['picture'],
+        ]);
 
         // Authentifiez l'utilisateur
         Auth::login($user, true);
