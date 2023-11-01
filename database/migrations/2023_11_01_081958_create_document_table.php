@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('document', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->nullable();
-            $table->enum('type', ['Assurance', 'Questionnaire santé', 'Autorisations', 'Certificat médical', 'Autre']);
-            $table->enum('statut', ['OK', 'KO']);
-            $table->string('url')->nullable();
-            $table->text('description')->nullable();
+            $table->date('date');
+            $table->string('type');
+            $table->string('url');
+            $table->string('extra');
+            $table->unsignedBigInteger('saison_id');
             $table->unsignedBigInteger('personne_id');
+            $table->foreign('saison_id')->references('id')->on('saison');
             $table->foreign('personne_id')->references('id')->on('personne')->onDelete('cascade');
             $table->timestamps();
         });

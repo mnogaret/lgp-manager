@@ -11,23 +11,7 @@ class GoogleAuthController extends Controller
     public function redirectToGoogle()
     {
         session(['url.intended' => url()->previous()]);
-
-        if (!config('app.google_auth_enabled')) {
-            // Ici, vous pouvez rediriger vers une page d'erreur ou simplement authentifier l'utilisateur localement sans passer par Google.
-            $user = User::where('email', "utilisateur@example.com")->first();
-            if (!$user) {
-                $user = User::create([
-                    'email' => "utilisateur@example.com",
-                    'first_name' => "Util",
-                    'last_name' => "Isateur",
-                    'avatar' => "https://images.unsplash.com/photo-1502378735452-bc7d86632805"
-                ]);
-            }
-            Auth::login($user, true);
-            return redirect()->intended('/');
-        }
-
-        $driver = Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/drive.readonly'])->redirect();
+        return Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/drive.readonly'])->redirect();
     }
 
     public function handleGoogleCallback()
@@ -49,6 +33,7 @@ class GoogleAuthController extends Controller
 
         // Authentifiez l'utilisateur
         Auth::login($user, true);
+        session(['google_token' => $googleUser->token]);
 
         return redirect()->intended('/');
     }

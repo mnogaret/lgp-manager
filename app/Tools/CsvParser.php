@@ -34,6 +34,9 @@ class CsvParser
         $header = null;
         $result = [];
         foreach ($array as $line) {
+            if (empty($line)) {
+                continue;
+            }
             if ($header === null) {
                 $header = $line;
             } else {

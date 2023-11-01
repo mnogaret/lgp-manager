@@ -28,9 +28,11 @@
                     <td>{{ $personne->prenom }}</td>
                     <td>{{ $personne->email1 }}</td>
                     <td>
-                        @foreach ($personne->adhesions as $adhesion)
-                            <p>{{ $adhesion->groupe->nom }}</p>
-                        @endforeach
+                        <ul>
+                            @foreach ($personne->adhesions as $adhesion)
+                                <x-adhesion-li :adhesion="$adhesion" />
+                            @endforeach
+                        </ul>
                     </td>
                 </tr>
             @endforeach

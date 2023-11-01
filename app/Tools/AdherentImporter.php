@@ -7,6 +7,8 @@ use App\Models\Document;
 use App\Models\Foyer;
 use App\Models\Groupe;
 use App\Models\Personne;
+use App\Models\Reglement;
+use App\Models\Saison;
 use DateTime;
 use Exception;
 
@@ -26,6 +28,8 @@ class AdherentImporter
     ];
     public function from_csv($text_content)
     {
+        $saison = Saison::where(['nom' => '2023 - 2024'])->first();
+        $foyer_ids = [];
         $groupes = Groupe::all()->keyBy('code');
         $csv_content = CsvParser::parse_csv($text_content);
         foreach ($csv_content as $raw_adherent) {
@@ -86,61 +90,172 @@ class AdherentImporter
                     'sexe' => $this->format_sexe($raw_adherent['Sexe']),
                     'nationalite' => $this->format_nationalite($raw_adherent['Nationalité']),
                     'ville_naissance' => $raw_adherent['Lieu de naissance'],
+                    'nom_assurance' => $raw_adherent['Nom de l\'assurance responsabilité civile'],
+                    'numero_assurance' => $raw_adherent['Numéro de souscripteur à cette assurance'],
+                    'droit_image' => $raw_adherent['Autorisations'] === 'Oui' ? 'O' : ($raw_adherent['Autorisations'] === 'Pas droit à l’image' ? 'N' : null),
                     'numero_licence' => $raw_adherent['N° Licence'],
                     'foyer_id' => $foyer_id,
                 ],
             );
 
             foreach ($this->get_groupe_code($raw_adherent['Groupe'], $raw_adherent['Créneaux']) as $code) {
-                $this->create_adhesion($adherent, $groupes[$code], $this->format_date_time($raw_adherent['Horodateur']));
+                $this->create_adhesion($adherent, $this->compute_etat($raw_adherent), $groupes[$code], $this->format_date_time($raw_adherent['Horodateur']));
             }
 
-            // ASSURANCE
-            $this->create_document(
-                [
-                    'personne_id' => $adherent->id,
-                    'type' => 'Assurance',
-                    'statut' => $raw_adherent['Assurance'] === 'Oui' ? 'OK' : 'KO',
-                    'description' => $raw_adherent['Nom de l\'assurance responsabilité civile'] . " - " . $raw_adherent['Numéro de souscripteur à cette assurance'],
-                ]
-            );
+            $foyer = Foyer::findOrFail($adherent->foyer_id);
+            if (!in_array($foyer->id, $foyer_ids)) {
+                Reglement::where('foyer_id', $foyer->id)->delete();
+                $foyer->update([
+                    'montant_total' => 0,
+                    'montant_regle' => 0,
+                ]);
+                $foyer_ids[] = $foyer->id;
+            }
+            $foyer->update([
+                'montant_total' => $foyer->montant_total + $this->extract_montant($raw_adherent['total a payer']),
+                'montant_regle' => $foyer->montant_regle + $this->extract_montant($raw_adherent['payé']),
+            ]);
 
-            // QUESTIONNAIRE SANTÉ
-            $this->create_document(
-                [
-                    'personne_id' => $adherent->id,
-                    'type' => 'Questionnaire santé',
-                    'statut' => $raw_adherent['QM'] === 'Oui' ? 'OK' : 'KO',
-                    'description' => $raw_adherent['QM'] === 'Certificat' ? 'Certificat médical requis' : null,
-                ]
-            );
-
-            // CERTIFICAT MÉDICAL
-            if ($raw_adherent['CM']) {
-                $this->create_document(
-                    [
-                        'personne_id' => $adherent->id,
-                        'type' => 'Certificat médical',
-                        'date' => $this->format_date($raw_adherent['CM']),
-                        'statut' => 'OK',
-                    ]
-                );
+            if ($raw_adherent['Virements']) {
+                Reglement::create([
+                    'type' => 'Virement',
+                    'date' => $this->extract_date($raw_adherent['mode paiement']),
+                    'montant' => $this->extract_montant($raw_adherent['Virements']),
+                    'code' => null,
+                    'depose' => true,
+                    'acquitte' => true,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+            if ($raw_adherent['Chq 1']) {
+                Reglement::create([
+                    'type' => 'Chèque',
+                    'date' => '2023-09-01',
+                    'montant' => $this->extract_montant($raw_adherent['Chq 1']),
+                    'depose' => true,
+                    'acquitte' => true,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
             }
 
-            // Autorisations
-            $this->create_document(
-                [
-                    'personne_id' => $adherent->id,
-                    'type' => 'Autorisations',
-                    'statut' => ($raw_adherent['Autorisations'] === 'Oui' || $raw_adherent['Autorisations'] === 'Pas droit à l’image') ? 'OK' : 'KO',
-                    'description' => $raw_adherent['Autorisations'] === 'Pas droit à l’image' ? 'Pas droit à l’image' : null,
-                ]
-            );
+            if ($raw_adherent['chq 2']) {
+                Reglement::create([
+                    'type' => 'Chèque',
+                    'date' => '2023-10-01',
+                    'montant' => $this->extract_montant($raw_adherent['chq 2']),
+                    'depose' => true,
+                    'acquitte' => true,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['chq 3']) {
+                Reglement::create([
+                    'type' => 'Chèque',
+                    'date' => '2023-11-01',
+                    'montant' => $this->extract_montant($raw_adherent['chq 3']),
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['chq 4 (dec.)']) {
+                Reglement::create([
+                    'type' => 'Chèque',
+                    'date' => '2023-12-01',
+                    'montant' => $this->extract_montant($raw_adherent['chq 4 (dec.)']),
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['chq Vacance']) {
+                Reglement::create([
+                    'type' => 'Chèque vacance',
+                    'montant' => $this->extract_montant($raw_adherent['chq Vacance']),
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['Pass\'Sport 50€']) {
+                Reglement::create([
+                    'type' => 'Pass’Sport',
+                    'montant' => 50,
+                    'code' => $raw_adherent['Pass\'Sport 50€'],
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['PassRegion 30€']) {
+                Reglement::create([
+                    'type' => 'Pass’Région',
+                    'montant' => 30,
+                    'code' => $raw_adherent['PassRegion 30€'],
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['espece']) {
+                Reglement::create([
+                    'type' => 'Espèces',
+                    'montant' => $this->extract_montant($raw_adherent['espece']),
+                    'depose' => true,
+                    'acquitte' => true,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
         }
+    }
+
+    private function extract_date($str)
+    {
+        if (preg_match('/^vir (\d+)\/(\d+)/u', $str, $matches)) {
+            $jour = $matches[1];
+            $mois = $matches[2];
+            return '2023-' . sprintf("%02d", $mois) . '-' . sprintf("%02d", $jour);
+        }
+        return null;
+    }
+
+    private function extract_montant($str)
+    {
+        if (empty($str)) {
+            return 0;
+        }
+        // Suppression des espaces insécables
+        $str = str_replace(' ', '', $str);
+        if (preg_match('/^([-\d,]+)( €)?$/u', $str, $matches)) {
+            $montant = str_replace(',', '.', $matches[1]);
+            return floatval($montant);
+        }
+        throw new Exception("Le montant n'est pas valide : $str");
     }
 
     private function get_groupe_code($groupe, $creneau)
     {
+        if (str_contains($groupe, '(liste d’attente)')) {
+            $groupe = str_replace(' (liste d’attente)', '', $groupe);
+        }
+        if ($groupe === 'Groupe Ados - 335 €/an') {
+            $groupe = 'Groupe Ados (tous niveaux) - 335 €/an';
+        }
         if ($groupe === 'Baby du mardi - 335 €/an') {
             return ['2023-baby-mar'];
         }
@@ -210,6 +325,12 @@ class AdherentImporter
         if ($groupe === 'PPG' && $creneau === 'Mardi 21h à 22h - 200 €/an') {
             return ['2023-ppg-mar-21'];
         }
+        if ($groupe === 'PPG' && $creneau === 'Mardi 22h à 23h - 200 €/an') {
+            return [];
+        }
+        if ($groupe === 'PPG' && $creneau === 'Vendredi 19h30 à 20h30 - 200 €/an') {
+            return [];
+        }
         throw new Exception("Groupe inconnu " . $groupe . " - " . $creneau);
     }
 
@@ -247,13 +368,35 @@ class AdherentImporter
         return $telephone;
     }
 
-    private function create_adhesion($adherent, $groupe, $date)
+    private function compute_etat($raw_adherent)
+    {
+        if ($raw_adherent['Contact email'] === 'Annulé') {
+            return 'annulé';
+        }
+        if ($raw_adherent['Contact email'] === 'En attente') {
+            return 'liste d’attente';
+        }
+        $complet = $raw_adherent['Assurance'] === 'Oui' && ($raw_adherent['QM'] === 'Oui' || !empty($raw_adherent['CM'])) && ($raw_adherent['Autorisations'] !== 'Oui' || $raw_adherent['Autorisations'] !== 'Pas droit à l’image');
+        $regle = $raw_adherent['Règlement'] === 'Acquitté' || $raw_adherent['Règlement'] === 'Reçu';
+        if ($complet && $regle) {
+            return "validé";
+        }
+        if ($complet) {
+            return "complet";
+        }
+        if ($regle) {
+            return "regle";
+        }
+        return "créé";
+    }
+
+    private function create_adhesion($adherent, $etat, $groupe, $date)
     {
         $data = [
             'personne_id' => $adherent->id,
             'date_creation_dossier' => $date,
             'groupe_id' => $groupe->id,
-            'etat' => 'créé',
+            'etat' => $etat,
         ];
 
         $adhesion = Adhesion::where('personne_id', $data['personne_id'])->where('groupe_id', $data['groupe_id'])->first();
@@ -282,21 +425,6 @@ class AdherentImporter
             $data['foyer_id'] = $foyer->id;
         }
         return Personne::create($data);
-    }
-
-    private function create_document($data)
-    {
-        if (!$data['type'] || !$data['personne_id']) {
-            return null;
-        }
-        $document = Document::where('type', $data['type'])->where('personne_id', $data['personne_id'])->first();
-        if ($document) {
-            $this->traces['existingDocument']++;
-            $document->update($data);
-            return $document;
-        }
-        $this->traces['newDocument']++;
-        return Document::create($data);
     }
 
     private function merge_personne($personne, $data)
@@ -346,7 +474,7 @@ class AdherentImporter
             $change = true;
         }
 
-        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'numero_licence', 'chef_de_foyer_id'] as $attribut) {
+        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'nom_assurance', 'numero_assurance', 'numero_licence', 'foyer_id'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $personne[$attribut] = $data[$attribut];
                 $change = true;
@@ -390,7 +518,7 @@ class AdherentImporter
         if (mb_strtolower($nationalite) === 'brésilienne') {
             return 'Brésilien';
         }
-        if (mb_strtolower($nationalite) === 'canadienne') {
+        if (mb_strtolower($nationalite) === 'canadienne' || mb_strtolower($nationalite) === 'canada') {
             return 'Canadien';
         }
         if (mb_strtolower($nationalite) === 'chinoise') {

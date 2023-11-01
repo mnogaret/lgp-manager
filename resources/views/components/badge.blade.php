@@ -9,6 +9,7 @@ $colors = [
     'purple' => 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300',
     'pink' => 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-300',
 ];
+$color = $color ?? 'default';
 $colorClasses = $colors[$color] ?? $colors['default'];
 ?>
-<span class="text-sm font-medium mr-2 px-2.5 py-0.5 rounded {{ $colorClasses }}">{{ $slot }}</span>
+<span class="text-sm font-medium mr-2 ml-2 px-2.5 py-0.5 rounded {{ $colorClasses }}">{{ $slot }}</span>

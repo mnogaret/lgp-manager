@@ -43,7 +43,7 @@ docker-compose exec web php artisan db:seed --class=SaisonSeeder
 # TODO
 
 - ☑ Page de recherche de personnes
-- ☐ Modèle : Gestion des pièces
+- ☑ Modèle : Gestion des pièces
   - ☐ Assurance
   - ☐ QM
   - ☐ autorisations
@@ -52,7 +52,7 @@ docker-compose exec web php artisan db:seed --class=SaisonSeeder
 - ☐ Modèle : Essai
 - ☐ Modèle : Licence
 - ☐ Modèle : Niveau
-- ☐ Modèle : Règlement
-  - ☐ Facture
-  - ☐ Total à payer
-  - ☐ Règlement (virement, chèque, CV, Pass'Sport, Pass'Région, espèce)
+- ☑ Modèle : Règlement
+  - ☑ Facture
+  - ☑ Total à payer
+  - ☑ Règlement (virement, chèque, CV, Pass'Sport, Pass'Région, espèce)

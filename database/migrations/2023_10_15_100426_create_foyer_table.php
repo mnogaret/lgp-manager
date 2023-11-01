@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('foyer', function (Blueprint $table) {
             $table->id();
+            $table->decimal('montant_total', 8, 2)->nullable(); // 8 chiffres au total, dont 2 après la virgule
+            $table->decimal('montant_regle', 8, 2)->nullable(); // 8 chiffres au total, dont 2 après la virgule
             $table->timestamps();
         });
     }
