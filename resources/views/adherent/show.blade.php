@@ -10,4 +10,9 @@
 <i class="fas fa-venus text-pink-400"></i>
 @endif
 <p>{{ $adherent->email1 }}</p>
+
+@foreach( $adherent->documents as $document)
+<x-document-card :document="$document" />
+@endforeach
+
 @endsection

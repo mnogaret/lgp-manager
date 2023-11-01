@@ -3,6 +3,7 @@
 namespace App\Tools;
 
 use App\Models\Adhesion;
+use App\Models\Document;
 use App\Models\Foyer;
 use App\Models\Groupe;
 use App\Models\Personne;
@@ -19,6 +20,8 @@ class AdherentImporter
         'existingAdhesion' => 0,
         'newAdhesion' => 0,
         'newFoyer' => 0,
+        'newDocument' => 0,
+        'existingDocument' => 0,
         'diff' => [],
     ];
     public function from_csv($text_content)
@@ -91,6 +94,48 @@ class AdherentImporter
             foreach ($this->get_groupe_code($raw_adherent['Groupe'], $raw_adherent['Créneaux']) as $code) {
                 $this->create_adhesion($adherent, $groupes[$code], $this->format_date_time($raw_adherent['Horodateur']));
             }
+
+            // ASSURANCE
+            $this->create_document(
+                [
+                    'personne_id' => $adherent->id,
+                    'type' => 'Assurance',
+                    'statut' => $raw_adherent['Assurance'] === 'Oui' ? 'OK' : 'KO',
+                    'description' => $raw_adherent['Nom de l\'assurance responsabilité civile'] . " - " . $raw_adherent['Numéro de souscripteur à cette assurance'],
+                ]
+            );
+
+            // QUESTIONNAIRE SANTÉ
+            $this->create_document(
+                [
+                    'personne_id' => $adherent->id,
+                    'type' => 'Questionnaire santé',
+                    'statut' => $raw_adherent['QM'] === 'Oui' ? 'OK' : 'KO',
+                    'description' => $raw_adherent['QM'] === 'Certificat' ? 'Certificat médical requis' : null,
+                ]
+            );
+
+            // CERTIFICAT MÉDICAL
+            if ($raw_adherent['CM']) {
+                $this->create_document(
+                    [
+                        'personne_id' => $adherent->id,
+                        'type' => 'Certificat médical',
+                        'date' => $this->format_date($raw_adherent['CM']),
+                        'statut' => 'OK',
+                    ]
+                );
+            }
+
+            // Autorisations
+            $this->create_document(
+                [
+                    'personne_id' => $adherent->id,
+                    'type' => 'Autorisations',
+                    'statut' => ($raw_adherent['Autorisations'] === 'Oui' || $raw_adherent['Autorisations'] === 'Pas droit à l’image') ? 'OK' : 'KO',
+                    'description' => $raw_adherent['Autorisations'] === 'Pas droit à l’image' ? 'Pas droit à l’image' : null,
+                ]
+            );
         }
     }
 
@@ -237,6 +282,21 @@ class AdherentImporter
             $data['foyer_id'] = $foyer->id;
         }
         return Personne::create($data);
+    }
+
+    private function create_document($data)
+    {
+        if (!$data['type'] || !$data['personne_id']) {
+            return null;
+        }
+        $document = Document::where('type', $data['type'])->where('personne_id', $data['personne_id'])->first();
+        if ($document) {
+            $this->traces['existingDocument']++;
+            $document->update($data);
+            return $document;
+        }
+        $this->traces['newDocument']++;
+        return Document::create($data);
     }
 
     private function merge_personne($personne, $data)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personne;
+use App\Tools\AdherentDriveScanner;
 use App\Tools\AdherentImporter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -45,7 +46,7 @@ class AdherentController extends Controller
     public function show(string $id)
     {
         // Récupérer la personne depuis la base de données
-        $adherent = Personne::with('adhesions.groupe')->findOrFail($id);
+        $adherent = Personne::with('adhesions.groupe')->with('documents')->findOrFail($id);
 
         // Passer la personne à la vue et l'afficher
         return view('adherent.show', ['adherent' => $adherent]);
@@ -87,5 +88,12 @@ class AdherentController extends Controller
         $importer->from_csv(file_get_contents($path));
 
         return redirect()->back()->with('success', print_r($importer->traces, true));
+    }
+
+    public function scanDrive(Request $request)
+    {
+        $scanner = new AdherentDriveScanner();
+        $scanner->from_drive("1LIrj3Z5cWdZDo30_xlLexRXoPlTRfzAT");
+        return redirect()->back()->with('success', print_r($scanner->traces, true));
     }
 }

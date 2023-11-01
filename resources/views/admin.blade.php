@@ -40,5 +40,12 @@
             </form>
         </label>
     </div>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Scan des documents du drive</h4>
+    <form action="{{ route('scan-drive-adherents') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="relative text-gray-500 focus-within:text-purple-600">
+            <button class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" type="submit">Scanner</button>
+        </div>
+    </form>
 </div>
 @endsection

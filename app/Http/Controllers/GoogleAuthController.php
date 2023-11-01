@@ -27,7 +27,7 @@ class GoogleAuthController extends Controller
             return redirect()->intended('/');
         }
 
-        return Socialite::driver('google')->redirect();
+        $driver = Socialite::driver('google')->scopes(['https://www.googleapis.com/auth/drive.readonly'])->redirect();
     }
 
     public function handleGoogleCallback()

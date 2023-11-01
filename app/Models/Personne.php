@@ -16,4 +16,9 @@ class Personne extends Model
     {
         return $this->hasMany(Adhesion::class, 'personne_id');
     }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class, 'personne_id');
+    }
 }
