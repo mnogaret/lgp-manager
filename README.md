@@ -43,16 +43,18 @@ docker-compose exec web php artisan db:seed --class=SaisonSeeder
 # TODO
 
 - ☑ Page de recherche de personnes
-- ☑ Modèle : Gestion des pièces
-  - ☐ Assurance
-  - ☐ QM
-  - ☐ autorisations
-  - ☐ CM
-- ☐ Modèle : Commentaires (permanence, mathieu, facturation, infos)
-- ☐ Modèle : Essai
-- ☐ Modèle : Licence
-- ☐ Modèle : Niveau
 - ☑ Modèle : Règlement
   - ☑ Facture
   - ☑ Total à payer
   - ☑ Règlement (virement, chèque, CV, Pass'Sport, Pass'Région, espèce)
+- ☑ Modèle : Gestion des pièces
+  - ☑ CM => personne->date_certificat_medical
+  - ☑ Essai => adhesion->essai
+  - ☑ Licence => table licence ?
+  - ☑ Niveau => personne->niveau
+- ☑ Import et affichage
+  - ☑ Date du CM
+  - ☑ Droit à l’image
+  - ☑ Adhésions dans la fiche de l’adhérent
+  - ☑ Commentaires (permanence, mathieu, facturation, infos)
+- ☐ Grille Excel

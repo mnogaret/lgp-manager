@@ -37,7 +37,7 @@ class AdherentDriveScanner
             'driveId' => $driveId,
             'corpora' => 'drive',
             'includeItemsFromAllDrives' => true,
-            'fields' => 'files(name, webViewLink, modifiedTime)',
+            'fields' => 'nextPageToken, files(name, webViewLink, modifiedTime)',
             'supportsAllDrives' => true,
             'pageSize' => 1000,
         ];

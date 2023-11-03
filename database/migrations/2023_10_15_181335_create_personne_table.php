@@ -27,10 +27,12 @@ return new class extends Migration
             $table->enum('sexe', ['M', 'F'])->nullable(); // M ou F
             $table->enum('nationalite', ['Allemand', 'Américain', 'Brésilien', 'Canadien', 'Chinois', 'Espagnol', 'Estonien', 'Français', 'Lésothien', 'Libanais', 'Lituanien', 'Marocain', 'Russe', 'Suédois', 'Tunisien', 'Ukrainien'])->nullable();
             $table->string('ville_naissance')->nullable();
+            $table->date('date_certificat_medical')->nullable();
             $table->string('nom_assurance')->nullable();
             $table->string('numero_assurance')->nullable();
             $table->enum('droit_image', ['O', 'N'])->nullable();
             $table->string('numero_licence')->nullable();
+            $table->enum('niveau', ['Lame 1', 'Lame 2', 'Lame 3', 'Lame 4', 'Lame 5', 'Lame 6', 'Lame 7', 'Lame 8', 'Lame 1/2', 'Lame 3/4', 'Lame 5/6', 'Lame 7/8'])->nullable();
             $table->foreign('foyer_id')->references('id')->on('foyer');
             $table->timestamps();
         });

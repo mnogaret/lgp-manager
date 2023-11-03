@@ -10,11 +10,11 @@ $menu = [
         'url' => '/adherent',
         'name' => 'Adhérents',
     ],
-    [
+/*    [
         'icon' => 'icon-stats.svg',
         'url' => '/stats',
         'name' => 'Statistiques',
-    ],
+    ],*/
     [
         'icon' => 'icon-admin.svg',
         'url' => '/admin',

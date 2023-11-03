@@ -3,6 +3,7 @@
 namespace App\Tools;
 
 use App\Models\Adhesion;
+use App\Models\Commentaire;
 use App\Models\Document;
 use App\Models\Foyer;
 use App\Models\Groupe;
@@ -11,6 +12,9 @@ use App\Models\Reglement;
 use App\Models\Saison;
 use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+
+use function PHPUnit\Framework\isEmpty;
 
 class AdherentImporter
 {
@@ -90,10 +94,12 @@ class AdherentImporter
                     'sexe' => $this->format_sexe($raw_adherent['Sexe']),
                     'nationalite' => $this->format_nationalite($raw_adherent['Nationalité']),
                     'ville_naissance' => $raw_adherent['Lieu de naissance'],
+                    'date_certificat_medical' => $this->optional_format_date($raw_adherent['CM']),
                     'nom_assurance' => $raw_adherent['Nom de l\'assurance responsabilité civile'],
                     'numero_assurance' => $raw_adherent['Numéro de souscripteur à cette assurance'],
                     'droit_image' => $raw_adherent['Autorisations'] === 'Oui' ? 'O' : ($raw_adherent['Autorisations'] === 'Pas droit à l’image' ? 'N' : null),
                     'numero_licence' => $raw_adherent['N° Licence'],
+                    'niveau' => empty($raw_adherent['Niveau']) ? null : $raw_adherent['Niveau'],
                     'foyer_id' => $foyer_id,
                 ],
             );
@@ -221,6 +227,53 @@ class AdherentImporter
                     'foyer_id' => $foyer->id,
                 ]);
             }
+
+            $commentaire = "";
+            if ($raw_adherent['Commentaires']) {
+                if (!empty($commentaire)) {
+                    $commentaire .= "\n---\n\n";
+                }
+                $commentaire .= "**Commentaire adhérent** : " . $raw_adherent['Commentaires'] . "\n";
+            }
+            if ($raw_adherent['Commentaire permanence']) {
+                if (!empty($commentaire)) {
+                    $commentaire .= "\n---\n\n";
+                }
+                $commentaire .= "**Commentaire permanence** : " . $raw_adherent['Commentaire permanence'] . "\n";
+            }
+            if ($raw_adherent['Commentaire Mathieu']) {
+                if (!empty($commentaire)) {
+                    $commentaire .= "\n---\n\n";
+                }
+                $commentaire .= "**Commentaire Mathieu** : " . $raw_adherent['Commentaire Mathieu'] . "\n";
+            }
+            if ($raw_adherent['Commentaires règlement']) {
+                if (!empty($commentaire)) {
+                    $commentaire .= "\n---\n\n";
+                }
+                $commentaire .= "**Commentaires règlement** : " . $raw_adherent['Commentaires règlement'] . "\n";
+            }
+            if ($raw_adherent['mode paiement']) {
+                if (!empty($commentaire)) {
+                    $commentaire .= "\n---\n\n";
+                }
+                $commentaire .= "**Mode paiement** : " . $raw_adherent['mode paiement'] . "\n";
+            }
+            if ($raw_adherent['infos']) {
+                if (!empty($commentaire)) {
+                    $commentaire .= "\n---\n\n";
+                }
+                $commentaire .= "**Infos** : " . $raw_adherent['infos'] . "\n";
+            }
+            if (!empty($commentaire)) {
+                Commentaire::create([
+                    'user_id' => Auth::user()->id,
+                    'type' => 'Import',
+                    'foyer_id' => $foyer->id,
+                    'personne_id' => $adherent->id,
+                    'commentaire' => $commentaire,
+                ]);
+            }
         }
     }
 
@@ -345,6 +398,11 @@ class AdherentImporter
         return "$year-$month-$day";
     }
 
+    function optional_format_date($date)
+    {
+        return $date ? $this->format_date($date) : null;
+    }
+
     function format_date_time($date)
     {
         return DateTime::createFromFormat('d/m/Y H:i:s', $date)->format('Y-m-d H:i:s');
@@ -381,11 +439,14 @@ class AdherentImporter
         if ($complet && $regle) {
             return "validé";
         }
-        if ($complet) {
-            return "complet";
-        }
         if ($regle) {
             return "regle";
+        }
+        if ($raw_adherent['Essai'] === 'Oui') {
+            return 'essai';
+        }
+        if ($complet) {
+            return "complet";
         }
         return "créé";
     }
@@ -474,7 +535,7 @@ class AdherentImporter
             $change = true;
         }
 
-        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'nom_assurance', 'numero_assurance', 'numero_licence', 'foyer_id'] as $attribut) {
+        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'date_certificat_medical', 'nom_assurance', 'numero_assurance', 'droit_image', 'niveau', 'numero_licence', 'foyer_id'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $personne[$attribut] = $data[$attribut];
                 $change = true;

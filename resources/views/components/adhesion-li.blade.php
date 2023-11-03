@@ -1,8 +1,9 @@
 <?php
 $colors = [
     'annulé' => 'dark',
-    'liste d’attente' => 'pink',
+    'liste d’attente' => 'dark',
     'créé' => 'red',
+    'essai' => 'pink',
     'complet' => 'yellow',
     'réglé' => 'default',
     'validé' => 'green',

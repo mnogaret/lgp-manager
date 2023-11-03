@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Creneau;
 use App\Models\Groupe;
 use App\Models\Saison;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -37,10 +38,10 @@ class SaisonSeeder extends Seeder
         $adulte_int_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte intermédiaire', 'code' => '2023-adulte-int-sam', 'nom' => 'Adulte intermédiaire de samedi',   'prix' => 240]);
         $adulte_dan_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2023-adulte-dan-mar', 'nom' => 'Adulte danseur du mardi',          'prix' => 240]);
         $adulte_dan_ven = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2023-adulte-dan-ven', 'nom' => 'Adulte danseur du vendredi',       'prix' => 240]);
-        $adulte_dan_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2023-adulte-dan-sam', 'nom' => 'Adulte danseur de samedi',         'prix' => 240]);
+        $adulte_dan_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2023-adulte-dan-sam', 'nom' => 'Adulte danseur du samedi',         'prix' => 240]);
         $adulte_sau_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2023-adulte-sau-mar', 'nom' => 'Adulte sauteur du mardi',          'prix' => 240]);
         $adulte_sau_ven = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2023-adulte-sau-ven', 'nom' => 'Adulte sauteur du vendredi',       'prix' => 240]);
-        $adulte_sau_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2023-adulte-sau-sam', 'nom' => 'Adulte sauteur de samedi',         'prix' => 240]);
+        $adulte_sau_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2023-adulte-sau-sam', 'nom' => 'Adulte sauteur du samedi',         'prix' => 240]);
         $ppg_mar_20 =     Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2023-ppg-mar-20',     'nom' => 'PPG du mardi 20h',                 'prix' => 200]);
         $ppg_mar_21 =     Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2023-ppg-mar-21',     'nom' => 'PPG du mardi 21h',                 'prix' => 200]);
 
@@ -90,5 +91,6 @@ class SaisonSeeder extends Seeder
         $adulte_int_sam->creneaux()->attach($creneau->id);
         $adulte_sau_sam->creneaux()->attach($creneau->id);
 
+        User::create([ 'email' => 'mnogaret@lyonglacepatinage.fr' ]);
     }
 }

@@ -10,8 +10,7 @@ class Personne extends Model
 {
     protected $table = 'personne';
     use HasFactory;
-
-    protected $fillable = ['nom', 'prenom', 'email1', 'email2', 'telephone1', 'telephone2', 'adresse_postale', 'code_postal', 'ville', 'date_naissance', 'sexe', 'nationalite', 'ville_naissance', 'numero_licence', 'foyer_id'];
+    protected $fillable = ['nom', 'prenom', 'email1', 'email2', 'telephone1', 'telephone2', 'adresse_postale', 'code_postal', 'ville', 'date_naissance', 'sexe', 'nationalite', 'ville_naissance', 'date_certificat_medical', 'nom_assurance', 'numero_assurance', 'droit_image', 'numero_licence', 'niveau', 'foyer_id'];
 
     public function adhesions()
     {

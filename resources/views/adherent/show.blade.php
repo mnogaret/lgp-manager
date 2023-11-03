@@ -6,10 +6,10 @@
             <x-personne-card :personne="$adherent" />
         </div>
         <div>
-            <x-adhesions-card :adhesions="$adherent->adhesions" />
+            <x-documents-card :documents="$adherent->documents" />
         </div>
         <div>
-            <x-documents-card :documents="$adherent->documents" />
+            <x-commentaires-card :commentaires="$adherent->foyer->commentaires" />
         </div>
     </div>
 
@@ -20,7 +20,7 @@
             <p>Montant réglé : {{ $adherent->foyer->montant_regle }}</p>
             <p>-----</p>
             @foreach ($adherent->foyer->reglements as $reglement)
-                <p>{{ $reglement->date }} {{ $reglement->type }} {{ $reglement->montant }}</p>
+                <p>{{ $reglement->date }} {{ $reglement->type }} {{ $reglement->montant }} {{ $reglement->code ? " (" . $reglement->code . ")" : "" }}</p>
             @endforeach
             <p>Total : {{ $adherent->foyer->montant_total_reglements() }}</p>
             <p>-----</p>

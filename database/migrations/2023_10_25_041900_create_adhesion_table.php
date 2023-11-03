@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('adhesion', function (Blueprint $table) {
             $table->id();
             $table->foreignId('personne_id')->constrained('personne');
-            $table->date('date_creation_dossier');
+            $table->timestamp('date_creation_dossier');
             $table->foreignId('groupe_id')->constrained('groupe');
-            $table->enum('etat', ['annulé', 'validé', 'réglé', 'complet', 'liste d’attente', 'créé']);
+            $table->enum('etat', ['annulé', 'validé', 'réglé', 'complet', 'essai', 'liste d’attente', 'créé']);
             $table->timestamps();
         });
     }

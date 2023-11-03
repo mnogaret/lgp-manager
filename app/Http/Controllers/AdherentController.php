@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Personne;
 use App\Tools\AdherentDriveScanner;
 use App\Tools\AdherentImporter;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -101,5 +102,11 @@ class AdherentController extends Controller
         $scanner = new AdherentDriveScanner();
         $scanner->from_drive();
         return redirect()->back()->with('success', print_r($scanner->traces, true));
+    }
+
+    public function generateFacture(string $id)
+    {
+        $adherent = Personne::with('adhesions.groupe')->with('documents')->with('foyer.membres')->with('foyer.reglements')->findOrFail($id);
+        return Pdf::loadView('pdf/facture', ['adherent' => $adherent])->download('facture-' . $adherent->nom . '-' . $adherent->prenom . '.pdf');
     }
 }

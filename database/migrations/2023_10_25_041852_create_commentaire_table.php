@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('commentaire', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->foreignId('utilisateur_id')->constrained('users'); // Supposant que vous utilisez la table 'users' pour les utilisateurs
-            $table->enum('type', ['adhesion', 'personne']);
-            $table->unsignedBigInteger('entite_id');
+            $table->foreignId('user_id')->constrained('users');
+            $table->string('type');
+            $table->foreignId('foyer_id')->constrained('foyer');
+            $table->foreignId('personne_id')->nullable()->constrained('personne')->onDelete('set null');
             $table->text('commentaire');
             $table->timestamps();
         });

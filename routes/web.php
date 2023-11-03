@@ -34,4 +34,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/import-adherents', [AdherentController::class, 'import'])->name('import-adherents');
     Route::post('/scan-drive-adherents', [AdherentController::class, 'scanDrive'])->name('scan-drive-adherents');
+    Route::get('/facture/{id}', [AdherentController::class, 'generateFacture']);
 });

@@ -22,6 +22,11 @@ class Foyer extends Model
         return $this->hasMany(Reglement::class, 'foyer_id');
     }
 
+    public function commentaires()
+    {
+        return $this->hasMany(Commentaire::class, 'foyer_id');
+    }
+
     public function montant_total_reglements()
     {
         $montant_total = 0;
