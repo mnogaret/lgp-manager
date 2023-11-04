@@ -8,6 +8,10 @@ Lancer Docker Desktop
 
 docker-compose up -d
 
+# Rebuild image docker
+
+docker-compose up -d --build
+
 # Commandes artisan
 
 docker-compose exec web php artisan migrate:reset

@@ -20,6 +20,10 @@
     <x-accordion id="facturation-accordion">
         <x-accordion-heading id="facturation-accordion" index="1">Facturation</x-accordion-heading>
         <x-accordion-body id="facturation-accordion" index="1">
+            <p>
+                Brouillon, pas fini... pour le moment j’ai juste affiché quelques données et je me suis juste amusé avec la génération de PDF.
+            </p>
+            <p>-----</p>
             <p>Montant total : {{ $adherent->foyer->montant_total }}</p>
             <p>Montant réglé : {{ $adherent->foyer->montant_regle }}</p>
             <p>-----</p>

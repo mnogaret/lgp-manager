@@ -17,6 +17,7 @@
             <tr>
                 <th>Type</th>
                 <th>Nom</th>
+                <th>Jours</th>
                 <th>Réglés</th>
                 <th>Inscrits</th>
                 <th>Liste d’attente</th>
@@ -34,6 +35,13 @@
                         <a href="{{ route('groupe.show', $groupe->id) }}" class="block hover:underline">
                             {{ $groupe->nom }}
                         </a>
+                    </td>
+                    <td>
+                        <ul>
+                        @foreach ($groupe->creneaux as $creneau)
+                            <li>{{ $creneau->jour }}</li>
+                        @endforeach
+                        </ul>
                     </td>
                     <td>{{ count($groupe->getRegle()) }}</td>
                     <td>{{ count($groupe->getInscrits()) }}</td>
