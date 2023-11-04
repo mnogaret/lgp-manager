@@ -1,12 +1,5 @@
-<?php
-$colors = [
-    'annulé' => 'dark',
-    'liste d’attente' => 'dark',
-    'créé' => 'red',
-    'essai' => 'pink',
-    'complet' => 'yellow',
-    'réglé' => 'default',
-    'validé' => 'green',
-];
-?>
-<li class="mb-2">{{ $adhesion->groupe->nom }} <x-badge color="{{ $colors[$adhesion->etat] }}">{{ $adhesion->etat }}</x-badge></li>
+<li class="mb-2">
+    <a href="{{ route('groupe.show', $adhesion->groupe->id) }}" class="block hover:underline">
+        {{ $adhesion->groupe->nom }} <x-adhesion-etat :adhesion="$adhesion" />
+    </a>
+</li>

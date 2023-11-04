@@ -12,45 +12,39 @@
     </script>
     <script type="text/javascript" charset="utf8" src="https://cdn.tailwindcss.com/3.3.5"></script>
 
-    <table id="adherentsTable" class="display compact">
+    <table id="groupesTable" class="display compact">
         <thead>
             <tr>
+                <th>Type</th>
                 <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Groupe</th>
+                <th>Réglés</th>
+                <th>Inscrits</th>
+                <th>Liste d’attente</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($adherents as $personne)
-                <tr>
+            @foreach ($groupes as $groupe)
+                <tr class="hover:text-blue-100">
                     <td>
-                        <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
-                            {{ $personne->nom }}
+                        <a href="{{ route('groupe.show', $groupe->id) }}" class="block hover:underline">
+                            {{ $groupe->type }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
-                            {{ $personne->prenom }}</a>
+                        <a href="{{ route('groupe.show', $groupe->id) }}" class="block hover:underline">
+                            {{ $groupe->nom }}
+                        </a>
                     </td>
-                    <td>
-                        <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
-                            {{ $personne->email1 }}</a>
-                    </td>
-                    <td>
-                        <ul>
-                            @foreach ($personne->adhesions as $adhesion)
-                                <x-adhesion-li :adhesion="$adhesion" />
-                            @endforeach
-                        </ul>
-                    </td>
+                    <td>{{ count($groupe->getRegle()) }}</td>
+                    <td>{{ count($groupe->getInscrits()) }}</td>
+                    <td>{{ count($groupe->getListeAttente()) }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
     <script>
         $(document).ready(function() {
-            let table = new DataTable('#adherentsTable', {
+            let table = new DataTable('#groupesTable', {
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json',
                 },

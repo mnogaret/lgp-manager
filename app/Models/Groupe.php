@@ -14,4 +14,42 @@ class Groupe extends Model
     {
         return $this->belongsToMany(Creneau::class, 'groupe_creneau');
     }
+
+    public function adhesions()
+    {
+        return $this->hasMany(Adhesion::class, 'groupe_id');
+    }
+
+    public function getInscrits()
+    {
+        $adhesions = [];
+        foreach ($this->adhesions as $adhesion) {
+            if (in_array($adhesion->etat, Adhesion::ETAT_INSCRIT)) {
+                $adhesions[] = $adhesion;
+            }
+        }
+        return $adhesions;
+    }
+
+    public function getRegle()
+    {
+        $adhesions = [];
+        foreach ($this->adhesions as $adhesion) {
+            if (in_array($adhesion->etat, Adhesion::ETAT_REGLE)) {
+                $adhesions[] = $adhesion;
+            }
+        }
+        return $adhesions;
+    }
+
+    public function getListeAttente()
+    {
+        $adhesions = [];
+        foreach ($this->adhesions as $adhesion) {
+            if (in_array($adhesion->etat, ['liste d’attente'])) {
+                $adhesions[] = $adhesion;
+            }
+        }
+        return $adhesions;
+    }
 }

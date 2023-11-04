@@ -49,4 +49,19 @@ class Personne extends Model
         // Si la date de naissance est nulle, retournez 0 ou une valeur par défaut
         return null; // Vous pouvez également retourner null ou une valeur par défaut selon vos besoins.
     }
+
+    public function getTelephone()
+    {
+        if (isset($this->telephone1)) {
+            return $this->telephone1;
+        }
+
+        foreach ($this->foyer->membres as $membre) {
+            if (isset($membre->telephone1)) {
+                return $membre->telephone1;
+            }
+        }
+
+        return null;
+    }
 }

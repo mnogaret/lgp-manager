@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Ce truc définit les couleurs mais pète le light mode -->
+    <!-- TODO faire le ménage dans les script et style -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.tailwindcss.com/3.3.5"></script>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
             <x-personne-card :personne="$adherent" />

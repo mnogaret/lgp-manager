@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -6,24 +10,41 @@
 
     <!-- Scripts -->
     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js">
-    </script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js">
-    </script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/dataTables.tailwindcss.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.tailwindcss.com/3.3.5"></script>
+
+    <div class="mb-6 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="mb-4 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Groupe {{ $groupe->nom }}</h5>
+        <ul>
+            @foreach ($groupe->creneaux as $creneau)
+                <li>{{ $creneau->jour }} de {{ Carbon::parse($creneau->heure_debut)->format('H\hi') }} à
+                    {{ Carbon::parse($creneau->heure_fin)->format('H\hi') }}</li>
+            @endforeach
+        </ul>
+    </div>
 
     <table id="adherentsTable" class="display compact">
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Nom</th>
                 <th>Prénom</th>
-                <th>Email</th>
-                <th>Groupe</th>
+                <th>Téléphone</th>
+                <th>Âge</th>
+                <th>Niveau</th>
+                <th>Image</th>
+                <th>Inscription</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($adherents as $personne)
                 <tr>
+                    <td>
+                        <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
+                            {{ $personne->id }}
+                        </a>
+                    </td>
                     <td>
                         <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
                             {{ $personne->nom }}
@@ -33,14 +54,16 @@
                         <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
                             {{ $personne->prenom }}</a>
                     </td>
+                    <td>{{ $personne->getTelephone() }}</td>
+                    <td data-order="{{ $personne->getAge() }}">{{ $personne->getAge() }}&nbsp;ans</td>
+                    <td><x-personne-niveau :personne="$personne" /></td>
                     <td>
-                        <a href="{{ route('adherent.show', $personne->id) }}" class="block hover:underline">
-                            {{ $personne->email1 }}</a>
+                        <x-badge-oui-non :value="$personne->droit_image" />
                     </td>
                     <td>
                         <ul>
                             @foreach ($personne->adhesions as $adhesion)
-                                <x-adhesion-li :adhesion="$adhesion" />
+                                <x-adhesion-etat :adhesion="$adhesion" />
                             @endforeach
                         </ul>
                     </td>

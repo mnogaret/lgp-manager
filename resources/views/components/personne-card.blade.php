@@ -14,7 +14,7 @@
             <i class="fas fa-venus text-pink-400"></i>
         @endif
         @if ($personne->date_naissance && $personne->getAge() <= 18)
-            {{ $personne->getAge() }} ans
+            {{ $personne->getAge() }}&nbsp;ans
         @endif
     </h5>
     <p>{{ $personne->email1 }}</p>
@@ -28,9 +28,17 @@
     <p>{{ $personne->nationalite ? 'Nationalité : ' . $personne->nationalite : '' }}</p>
     <p>{{ $personne->nom_assurance ? $personne->nom_assurance . ' | ' . $personne->numero_assurance : '' }}</p>
     <p>{{ $personne->date_certificat_medical ? 'Certificat médical : ' . $personne->date_certificat_medical : '' }}</p>
-    <p>{{ $personne->droit_image ? 'Droit à l’image : ' . $personne->droit_image : '' }}</p>
+    <p>
+        @if ($personne->droit_image)
+            Droit à l’image : <x-badge-oui-non :value="$personne->droit_image" />
+        @endif
+    </p>
     <p>{{ $personne->numero_licence ? 'Licence : ' . $personne->numero_licence : '' }}</p>
-    <p>{{ $personne->niveau ? 'Niveau : ' . $personne->niveau : '' }}</p>
+    <p>
+        @if ($personne->niveau)
+            Niveau : <x-personne-niveau :personne="$personne" />
+        @endif
+    </p>
 
     @if (count($personne->adhesions) > 0)
         <h5 class="my-4 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Adhésions</h5>

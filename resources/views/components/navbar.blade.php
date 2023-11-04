@@ -10,6 +10,11 @@ $menu = [
         'url' => '/adherent',
         'name' => 'Adhérents',
     ],
+    [
+        'icon' => 'icon-stats.svg',
+        'url' => '/groupe',
+        'name' => 'Groupes',
+    ],
 /*    [
         'icon' => 'icon-stats.svg',
         'url' => '/stats',
