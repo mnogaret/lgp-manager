@@ -25,7 +25,7 @@
         </p>
     </div>
 
-    <x-pdf-adherents-table :adherents="$adherents" :niveaux="$niveaux" />
+    <x-pdf-adherents-table :adherents="$adherents" :niveaux="$niveaux" :groupes="false" />
 </body>
 
 </html>

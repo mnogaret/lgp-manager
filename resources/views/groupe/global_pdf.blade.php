@@ -18,9 +18,9 @@
 <body>
     @foreach ($impressions as $impression)
         @php
-            $niveaux = in_array($impression['nom'], ['Baby', 'Lame 1', 'Lame 2', 'Lame 3', 'Lame 4', 'Lame 5', 'Lame 6', 'Lame 7', 'Lame 8', 'Ados']);
+            $sous_groupes = count($impression['groupes']) > 1;
         @endphp
-        <div class="entete newpage">
+        <div class="entete {{ $loop->first ? '' : 'newpage' }}">
             <h1>Groupe {{ $impression['nom'] }}</h1>
             <p>
                 Le
@@ -33,7 +33,7 @@
             </p>
         </div>
 
-        <x-pdf-adherents-table :adherents="$impression['adherents']" :niveaux="$niveaux" />
+        <x-pdf-adherents-table :adherents="$impression['adherents']" :niveaux="isset($impression['niveaux']) ? $impression['niveaux'] : false" :groupes="$sous_groupes" />
     @endforeach
 </body>
 

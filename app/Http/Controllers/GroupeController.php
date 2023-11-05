@@ -70,53 +70,64 @@ class GroupeController extends Controller
 
     public function groupes_pdf()
     {
-        $impressions = [
+        $impression_defs = [
             [
                 'nom' => 'Baby',
                 'groupes' => ['2023-baby-mar', '2023-baby-ven'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 1',
                 'groupes' => ['2023-lame1'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 2',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 1', 'Lame 2', 'Lame 1/2', null]
+                'niveau' => ['Lame 1', 'Lame 2', 'Lame 1/2'],
+                'niveau_null' => true,
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 3',
                 'groupes' => ['2023-lame2+'],
                 'niveau' => ['Lame 3', 'Lame 3/4'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 4',
                 'groupes' => ['2023-lame2+'],
                 'niveau' => ['Lame 4'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 5',
                 'groupes' => ['2023-lame2+'],
                 'niveau' => ['Lame 5', 'Lame 4/5'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 6',
                 'groupes' => ['2023-lame2+'],
                 'niveau' => ['Lame 6'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 7',
                 'groupes' => ['2023-lame2+'],
                 'niveau' => ['Lame 7', 'Lame 7/8'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 8',
                 'groupes' => ['2023-lame2+'],
                 'niveau' => ['Lame 8'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Ados',
                 'groupes' => ['2023-ados'],
+                'niveaux' => true,
             ],
             [
                 'nom' => 'Adultes D&D du mardi',
@@ -153,24 +164,50 @@ class GroupeController extends Controller
         ];
 
         $etats = Adhesion::ETAT_INSCRIT;
-        foreach ($impressions as $key => $value) {
-            $impressions[$key]['adherents'] = [];
-            $impressions[$key]['creneaux'] = [];
-            foreach ($impressions[$key]['groupes'] as $groupe_code) {
+        $impressions = [];
+        for ($i = 0; $i < count($impression_defs); $i++) {
+            $impression = $impression_defs[$i];
+
+
+            $groupe_codes = $impression['groupes'];
+
+            $impression['creneaux'] = Creneau::whereHas('groupes', function ($query) use ($groupe_codes) {
+                $query->whereIn('code', $groupe_codes);
+            })->get();
+
+            $impression['adherents'] = [];
+            foreach ($groupe_codes as $groupe_code) {
                 $groupe = Groupe::where('code', $groupe_code)->firstOrFail();
                 $id = $groupe->id;
-                $impressions[$key]['adherents'] = array_merge($impressions[$key]['adherents'], Personne::with(
+
+                $q = Personne::with(
                     ['adhesions' => function ($query) use ($id, $etats) {
-                        $query->where('id', $id)->whereIn('etat', $etats);
+                        $query->where('groupe_id', $id)->whereIn('etat', $etats);
                     }]
                 )->whereHas('adhesions', function ($query) use ($id, $etats) {
-                    $query->where('id', $id)->whereIn('etat', $etats);
-                })->orderBy('nom')->orderBy('prenom')->get()->toArray());
+                    $query->where('groupe_id', $id)->whereIn('etat', $etats);
+                });
+                if (isset($impression['niveau'])) {
+                    $q = $q->where(function ($query) use ($impression) {
+                        $query->where(function ($subquery) use ($impression) {
+                            if (isset($impression['niveau']) && count($impression['niveau']) > 0) {
+                                $subquery->whereIn('niveau', $impression['niveau']);
+                            }
+                        });
 
-                $groupe_codes = $impressions[$key]['groupes'];
-                $impressions[$key]['creneaux'] = Creneau::whereHas('groupes', function ($query) use ($groupe_codes) {
-                    $query->whereIn('code', $groupe_codes);
-                })->get();
+                        if (isset($impression['niveau_null']) && $impression['niveau_null']) {
+                            $query->orWhereNull('niveau');
+                        }
+                    });
+                }
+                $adherents = $q->orderBy('nom')->orderBy('prenom')->get();
+
+                foreach ($adherents as $adherent) {
+                    $impression['adherents'][] = $adherent;
+                }
+            }
+            if (count($impression['adherents']) > 0) {
+                $impressions[] = $impression;
             }
         }
 

@@ -76,11 +76,19 @@
         color: #d400b1;
     }
 
-    .warning-yellow {
+    .background-yellow {
         background-color: #ffffbb;
     }
 
-    .warning-red {
+    .background-green {
+        background-color: #ccffcc;
+    }
+
+    .background-blue {
+        background-color: #ccccff;
+    }
+
+    .background-red {
         background-color: #ffcccc;
     }
 </style>
