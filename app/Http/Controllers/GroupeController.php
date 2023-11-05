@@ -53,7 +53,7 @@ class GroupeController extends Controller
             }]
         )->whereHas('adhesions', function ($query) use ($id, $etats) {
             $query->where('groupe_id', $id)->whereIn('etat', $etats);
-        })->get();
+        })->orderBy('nom')->orderBy('prenom')->get();
 
         $pdf = \PDF::loadView('groupe.pdf', ['groupe' => $groupe, 'adherents' => $adherents]);
 
