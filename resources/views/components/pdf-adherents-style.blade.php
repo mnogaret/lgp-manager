@@ -1,6 +1,7 @@
 <style>
     body {
         font-family: 'Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji';
+        font-size: 60%;
     }
 
     .entete>h1 {
@@ -25,7 +26,7 @@
         border: 1px solid gray;
         border-collapse: collapse;
         margin: 0;
-        padding: 0.5mm 3mm;
+        padding: 0.5mm 2mm;
     }
 
     .centered {

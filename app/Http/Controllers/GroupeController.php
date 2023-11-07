@@ -58,9 +58,6 @@ class GroupeController extends Controller
 
         $pdf = Pdf::loadView('groupe.pdf', ['groupe' => $groupe, 'adherents' => $adherents]);
 
-        // Définir l'orientation en paysage
-        $pdf->setPaper('a4', 'landscape');
-
         // Définir des marges personnalisées (si vous avez besoin de valeurs spécifiques)
         // Les valeurs des marges sont en pouces par défaut. [left, top, right, bottom]
         $pdf->setOptions(['margin-left' => '5', 'margin-right' => '5', 'margin-top' => '5', 'margin-bottom' => '5']);
@@ -212,9 +209,6 @@ class GroupeController extends Controller
         }
 
         $pdf = Pdf::loadView('groupe.global_pdf', ['impressions' => $impressions]);
-
-        // Définir l'orientation en paysage
-        $pdf->setPaper('a4', 'landscape');
 
         // Définir des marges personnalisées (si vous avez besoin de valeurs spécifiques)
         // Les valeurs des marges sont en pouces par défaut. [left, top, right, bottom]
