@@ -15,6 +15,11 @@ class Groupe extends Model
         return $this->belongsToMany(Creneau::class, 'groupe_creneau');
     }
 
+    public function seances()
+    {
+        return $this->hasMany(Seance::class, 'groupe_id');
+    }
+
     public function adhesions()
     {
         return $this->hasMany(Adhesion::class, 'groupe_id');
@@ -52,4 +57,5 @@ class Groupe extends Model
         }
         return $adhesions;
     }
+
 }

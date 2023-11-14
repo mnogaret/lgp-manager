@@ -34,6 +34,7 @@
                 <th>Réglés</th>
                 <th>Inscrits</th>
                 <th>Liste d’attente</th>
+                <th>Séances</th>
             </tr>
         </thead>
         <tbody>
@@ -51,14 +52,27 @@
                     </td>
                     <td>
                         <ul>
-                        @foreach ($groupe->creneaux as $creneau)
-                            <li>{{ $creneau->jour }}</li>
-                        @endforeach
+                            @foreach ($groupe->creneaux as $creneau)
+                                <li>{{ $creneau->jour }}</li>
+                            @endforeach
                         </ul>
                     </td>
                     <td>{{ count($groupe->getRegle()) }}</td>
                     <td>{{ count($groupe->getInscrits()) }}</td>
                     <td>{{ count($groupe->getListeAttente()) }}</td>
+                    <td>
+                        <ul>
+                            @foreach ($groupe->seances as $seance)
+                                <li>{{ $seance->date }} ({{ $seance->code }})</li>
+                            @endforeach
+                            @foreach ($groupe->creneaux as $creneau)
+                                <li><a
+                                        href="{{ route('seance.create', ['groupe' => $groupe->id, 'creneau' => $creneau->id]) }}">Créer
+                                        ({{ $creneau->jour }})
+                                    </a></li>
+                            @endforeach
+                        </ul>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

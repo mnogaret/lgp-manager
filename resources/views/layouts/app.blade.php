@@ -22,11 +22,20 @@
 <body class="bg-white border-gray-200 dark:bg-gray-900 dark:text-white">
     <x-navbar />
     <main class="h-full pb-16 overflow-y-auto">
+        @if ($errors->any())
+            <div>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container px-6 mx-auto grid max-w-screen-xl p-6">
             @yield('content')
         </div>
         <script src="{{ mix('js/app.js') }}"></script>
-      </main>
+    </main>
 </body>
 
 </html>

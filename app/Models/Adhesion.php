@@ -24,4 +24,9 @@ class Adhesion extends Model
     {
         return $this->belongsTo(Personne::class);
     }
+
+    public function isInscrit()
+    {
+        return in_array($this->etat, Adhesion::ETAT_INSCRIT);
+    }
 }

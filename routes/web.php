@@ -5,6 +5,7 @@ use App\Http\Controllers\AdherentController;
 use App\Http\Controllers\PersonneController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\GroupeController;
+use App\Http\Controllers\SeanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/import-adherents', [AdherentController::class, 'import'])->name('import-adherents');
     Route::post('/scan-drive-adherents', [AdherentController::class, 'scanDrive'])->name('scan-drive-adherents');
     Route::get('/facture/{id}', [AdherentController::class, 'generateFacture']);
+
+    Route::get('/seance/create/{groupe}/{creneau}', [SeanceController::class, 'create'])->name('seance.create');
+    Route::post('/seance/store/{groupe}/{creneau}', [SeanceController::class, 'store'])->name('seance.store');
 });

@@ -14,6 +14,9 @@ docker-compose up -d --build
 
 # Commandes artisan
 
+php artisan make:migration create_ma_table_table
+php artisan make:model MaTable
+
 docker-compose exec web php artisan migrate:reset
 docker-compose exec web php artisan migrate
 docker-compose exec web php artisan db:seed --class=SaisonSeeder

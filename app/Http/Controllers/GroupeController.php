@@ -20,7 +20,10 @@ class GroupeController extends Controller
      */
     public function index()
     {
-        $groupes = Groupe::with('adhesions.personne')->get();
+        $groupes = Groupe::with(['adhesions.personne', 'seances' => function ($query) {
+            $query->where('statut', 'Ouvert');
+        }])->get();
+
         return view('groupe.index', ['groupes' => $groupes]);
     }
 

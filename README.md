@@ -57,4 +57,3 @@ docker-compose exec web php artisan db:seed --class=SaisonSeeder
   - ☑ Droit à l’image
   - ☑ Adhésions dans la fiche de l’adhérent
   - ☑ Commentaires (permanence, mathieu, facturation, infos)
-- ☐ Grille Excel
