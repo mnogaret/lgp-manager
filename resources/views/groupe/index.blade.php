@@ -63,7 +63,7 @@
                     <td>
                         <ul>
                             @foreach ($groupe->seances as $seance)
-                                <li>{{ $seance->date }} ({{ $seance->code }})</li>
+                                <li><a href="{{ route('pointage', $seance->code) }}">{{ $seance->date }}</a></li>
                             @endforeach
                             @foreach ($groupe->creneaux as $creneau)
                                 <li><a

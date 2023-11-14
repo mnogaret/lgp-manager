@@ -5,6 +5,7 @@ use App\Http\Controllers\AdherentController;
 use App\Http\Controllers\PersonneController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\GroupeController;
+use App\Http\Controllers\PointageController;
 use App\Http\Controllers\SeanceController;
 
 /*
@@ -21,6 +22,7 @@ use App\Http\Controllers\SeanceController;
 Route::get('/login', [GoogleAuthController::class, 'redirectToGoogle'])->name('login');
 Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 Route::get('/logout', [GoogleAuthController::class, 'logout']);
+Route::get('/pointage/{code}', [PointageController::class, 'pointage'])->name('pointage');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('/welcome');
