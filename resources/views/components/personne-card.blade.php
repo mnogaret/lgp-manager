@@ -36,7 +36,7 @@
     <p>{{ $personne->numero_licence ? 'Licence : ' . $personne->numero_licence : '' }}</p>
     <p>
         @if ($personne->niveau)
-            Niveau : <x-personne-niveau :personne="$personne" />
+            Niveau : <x-niveau :niveau="$personne->niveau" />
         @endif
     </p>
 

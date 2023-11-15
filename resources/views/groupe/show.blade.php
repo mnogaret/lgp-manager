@@ -67,7 +67,7 @@
                     </td>
                     <td>{{ $personne->getTelephone() }}</td>
                     <td data-order="{{ $personne->getAge() }}">{{ $personne->getAge() }}&nbsp;ans</td>
-                    <td><x-personne-niveau :personne="$personne" /></td>
+                    <td><x-niveau :niveau="$personne->niveau" /></td>
                     <td>
                         <x-badge-oui-non :value="$personne->droit_image" />
                     </td>

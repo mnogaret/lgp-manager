@@ -1,5 +1,6 @@
 <?php
 $colors = [
+    'Sans niveau' => 'white',
     'Lame 1' => 'white',
     'Lame 1/2' => 'white',
     'Lame 2' => 'yellow',
@@ -14,6 +15,6 @@ $colors = [
     'Lame 8' => 'black',
 ];
 ?>
-@if ($personne->niveau)
-    <x-badge color="{{ $colors[$personne->niveau] }}">{{ $personne->niveau }}</x-badge>
+@if ($niveau)
+    <x-badge id="{{ $id ?? '' }}" @endif color="{{ $colors[$niveau] }}" plain="{{ $plain ?? true }}" hidden="{{ $hidden ?? false }}">{{ $niveau }}</x-badge>
 @endif
