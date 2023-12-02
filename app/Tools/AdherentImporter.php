@@ -463,6 +463,7 @@ class AdherentImporter
         $adhesion = Adhesion::where('personne_id', $data['personne_id'])->where('groupe_id', $data['groupe_id'])->first();
         if ($adhesion) {
             $this->traces['existingAdhesion']++;
+            $adhesion['etat'] = $data['etat'];
             return $adhesion;
         }
         $this->traces['newAdhesion']++;
