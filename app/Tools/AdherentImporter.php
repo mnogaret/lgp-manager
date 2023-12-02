@@ -463,7 +463,8 @@ class AdherentImporter
         $adhesion = Adhesion::where('personne_id', $data['personne_id'])->where('groupe_id', $data['groupe_id'])->first();
         if ($adhesion) {
             $this->traces['existingAdhesion']++;
-            $adhesion['etat'] = $data['etat'];
+            $adhesion['etat'] = $etat;
+            $adhesion->save();
             return $adhesion;
         }
         $this->traces['newAdhesion']++;
@@ -478,6 +479,7 @@ class AdherentImporter
         $personne = Personne::where('nom', $data['nom'])->where('prenom', $data['prenom'])->first();
         if ($personne) {
             $this->merge_personne($personne, $data);
+            $personne->save();
             return $personne;
         }
         $this->traces['newPersonne']++;
