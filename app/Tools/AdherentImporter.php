@@ -618,6 +618,9 @@ class AdherentImporter
         if (mb_strtolower($nationalite) === 'ukrainienne') {
             return 'Ukrainien';
         }
+        if (mb_strtolower($nationalite) === 'algérienne') {
+            return 'Algérien';
+        }
 
         return $nationalite;
     }
