@@ -7,9 +7,14 @@
                 'title' => 'TODO',
                 'features' => [
                     'Gestion des pointages',
+                    'Affichage des pointages',
                     'Édition des adhérents',
                     'Suivi de la facturation',
                 ],
+            ],
+            [
+                'title' => '31/12/2023',
+                'features' => ['Retrait de l’enum sur la nationalité', 'Suppression des doublons de commentaire'],
             ],
             [
                 'title' => '07/11/2023',

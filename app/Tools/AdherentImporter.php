@@ -134,11 +134,11 @@ class AdherentImporter
                     'foyer_id' => $foyer->id,
                 ]);
             }
-            if ($raw_adherent['Chq 1']) {
+            if ($raw_adherent['Chq Sept']) {
                 Reglement::create([
                     'type' => 'Chèque',
                     'date' => '2023-09-01',
-                    'montant' => $this->extract_montant($raw_adherent['Chq 1']),
+                    'montant' => $this->extract_montant($raw_adherent['Chq Sept']),
                     'depose' => true,
                     'acquitte' => true,
                     'saison_id' => $saison->id,
@@ -146,11 +146,11 @@ class AdherentImporter
                 ]);
             }
 
-            if ($raw_adherent['chq 2']) {
+            if ($raw_adherent['chq Oct']) {
                 Reglement::create([
                     'type' => 'Chèque',
                     'date' => '2023-10-01',
-                    'montant' => $this->extract_montant($raw_adherent['chq 2']),
+                    'montant' => $this->extract_montant($raw_adherent['chq Oct']),
                     'depose' => true,
                     'acquitte' => true,
                     'saison_id' => $saison->id,
@@ -158,11 +158,11 @@ class AdherentImporter
                 ]);
             }
 
-            if ($raw_adherent['chq 3']) {
+            if ($raw_adherent['chq Nov']) {
                 Reglement::create([
                     'type' => 'Chèque',
                     'date' => '2023-11-01',
-                    'montant' => $this->extract_montant($raw_adherent['chq 3']),
+                    'montant' => $this->extract_montant($raw_adherent['chq Nov']),
                     'depose' => false,
                     'acquitte' => false,
                     'saison_id' => $saison->id,
@@ -170,11 +170,35 @@ class AdherentImporter
                 ]);
             }
 
-            if ($raw_adherent['chq 4 (dec.)']) {
+            if ($raw_adherent['chq Dec.']) {
                 Reglement::create([
                     'type' => 'Chèque',
                     'date' => '2023-12-01',
-                    'montant' => $this->extract_montant($raw_adherent['chq 4 (dec.)']),
+                    'montant' => $this->extract_montant($raw_adherent['chq Dec.']),
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['chq Janv']) {
+                Reglement::create([
+                    'type' => 'Chèque',
+                    'date' => '2023-12-01',
+                    'montant' => $this->extract_montant($raw_adherent['chq Janv']),
+                    'depose' => false,
+                    'acquitte' => false,
+                    'saison_id' => $saison->id,
+                    'foyer_id' => $foyer->id,
+                ]);
+            }
+
+            if ($raw_adherent['chq Fev']) {
+                Reglement::create([
+                    'type' => 'Chèque',
+                    'date' => '2023-12-01',
+                    'montant' => $this->extract_montant($raw_adherent['chq Fev']),
                     'depose' => false,
                     'acquitte' => false,
                     'saison_id' => $saison->id,
@@ -275,6 +299,19 @@ class AdherentImporter
                 ]);
             }
         }
+
+        $this->remove_commentaire_duplicates();
+    }
+
+    private function remove_commentaire_duplicates()
+    {
+        // Récupération des IDs des commentaires les plus anciens à conserver
+        $commentairesAConserver = Commentaire::selectRaw('MIN(id) as id')
+            ->groupBy('user_id', 'type', 'foyer_id', 'personne_id', 'commentaire')
+            ->pluck('id');
+
+        // Suppression des doublons en ne conservant que les commentaires les plus anciens
+        Commentaire::whereNotIn('id', $commentairesAConserver)->delete();
     }
 
     private function extract_date($str)

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('ville')->nullable();
             $table->date('date_naissance')->nullable();
             $table->enum('sexe', ['M', 'F'])->nullable(); // M ou F
-            $table->enum('nationalite', ['Allemand', 'Américain', 'Brésilien', 'Canadien', 'Chinois', 'Espagnol', 'Estonien', 'Français', 'Lésothien', 'Libanais', 'Lituanien', 'Marocain', 'Russe', 'Suédois', 'Tunisien', 'Ukrainien'])->nullable();
+            $table->string('nationalite', ['Allemand', 'Américain', 'Brésilien', 'Canadien', 'Chinois', 'Espagnol', 'Estonien', 'Français', 'Lésothien', 'Libanais', 'Lituanien', 'Marocain', 'Russe', 'Suédois', 'Tunisien', 'Ukrainien'])->nullable();
             $table->string('ville_naissance')->nullable();
             $table->date('date_certificat_medical')->nullable();
             $table->string('nom_assurance')->nullable();
