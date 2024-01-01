@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdherentController;
+use App\Http\Controllers\AdhesionController;
 use App\Http\Controllers\PersonneController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\GroupeController;
@@ -33,12 +34,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
         return view('/admin');
     });
+
+    // Verb          Path                        Action  Route Name
+    // GET           /users                      index   users.index
+    // GET           /users/create               create  users.create
+    // POST          /users                      store   users.store
+    // GET           /users/{user}               show    users.show
+    // GET           /users/{user}/edit          edit    users.edit
+    // PUT|PATCH     /users/{user}               update  users.update
+    // DELETE        /users/{user}               destroy users.destroy
     Route::resource('adherent', AdherentController::class);
     Route::resource('groupe', GroupeController::class);
-    Route::resource('personne', PersonneController::class);
+
+    Route::get('/personne/{personne}/edit', [PersonneController::class, 'edit'])->name('personne.edit');
+    Route::put('/personne/{personne}', [PersonneController::class, 'update'])->name('personne.update');
 
     Route::get('groupe/{id}/pdf', [GroupeController::class, 'pdf'])->name('groupe.pdf');
     Route::get('groupes/pdf', [GroupeController::class, 'groupes_pdf'])->name('groupes.pdf');
+
+    Route::get('/adhesion/{adhesion}/change-etat', [AdhesionController::class, 'changeEtat'])->name('adhesion.changeEtat');
 
     Route::post('/import-adherents', [AdherentController::class, 'import'])->name('import-adherents');
     Route::post('/scan-drive-adherents', [AdherentController::class, 'scanDrive'])->name('scan-drive-adherents');

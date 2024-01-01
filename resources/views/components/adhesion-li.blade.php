@@ -1,5 +1,6 @@
-<li class="mb-2">
-    <a href="{{ route('groupe.show', $adhesion->groupe->id) }}" class="block hover:underline">
-        {{ $adhesion->groupe->nom }} <x-adhesion-etat :adhesion="$adhesion" />
+<li class="mb-2 block">
+    <a href="{{ route('groupe.show', $adhesion->groupe->id) }}" class="hover:underline">
+        {{ $adhesion->groupe->nom }}
     </a>
+    <x-adhesion-etat :adhesion="$adhesion" />
 </li>
