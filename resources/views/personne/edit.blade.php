@@ -39,17 +39,14 @@
                 <x-input id="numero_licence" label="Numéro de licence" :value="$personne->numero_licence" />
                 <x-dropdown id="niveau" label="Niveau" :options="[
                     '' => 'Non défini', 
+                    'Patin Rouge' => 'Patin Rouge', 
                     'Lame 1' => 'Lame 1', 
-                    'Lame 1/2' => 'Lame 1/2', 
                     'Lame 2' => 'Lame 2',
                     'Lame 3' => 'Lame 3', 
-                    'Lame 3/4' => 'Lame 3/4', 
                     'Lame 4' => 'Lame 4',
                     'Lame 5' => 'Lame 5', 
-                    'Lame 5/6' => 'Lame 5/6', 
                     'Lame 6' => 'Lame 6',
                     'Lame 7' => 'Lame 7', 
-                    'Lame 7/8' => 'Lame 7/8', 
                     'Lame 8' => 'Lame 8',
                 ]" value="{{ $personne->niveau }}" />
             </div>

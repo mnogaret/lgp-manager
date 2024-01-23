@@ -84,14 +84,14 @@ class GroupeController extends Controller
             [
                 'nom' => 'Lame 2',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 1', 'Lame 2', 'Lame 1/2'],
+                'niveau' => ['Lame 1', 'Lame 2'],
                 'niveau_null' => true,
                 'niveaux' => true,
             ],
             [
                 'nom' => 'Lame 3',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 3', 'Lame 3/4'],
+                'niveau' => ['Lame 3'],
                 'niveaux' => true,
             ],
             [
@@ -103,7 +103,7 @@ class GroupeController extends Controller
             [
                 'nom' => 'Lame 5',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 5', 'Lame 4/5'],
+                'niveau' => ['Lame 5'],
                 'niveaux' => true,
             ],
             [
@@ -115,7 +115,7 @@ class GroupeController extends Controller
             [
                 'nom' => 'Lame 7',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 7', 'Lame 7/8'],
+                'niveau' => ['Lame 7'],
                 'niveaux' => true,
             ],
             [

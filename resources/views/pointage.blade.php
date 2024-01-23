@@ -10,6 +10,7 @@
     }
     $niv = [
         'niveau-sans' => 'Sans niveau',
+        'niveau-0' => 'Patin Rouge',
         'niveau-1' => 'Lame 1',
         'niveau-2' => 'Lame 2',
         'niveau-3' => 'Lame 3',
@@ -104,22 +105,6 @@
                 let niveau = data[2] || 'Sans niveau';
                 return niveaux.length === 0 || niveaux.indexOf(niveau) >= 0;
             });
-
-            function hackNiveaux() {
-                niveaux = niveaux.filter((v) => v.indexOf('/') < 0);
-                if (niveaux.indexOf('Lame 1') >= 0 || niveaux.indexOf('Lame 2') >= 0) {
-                    niveaux.push('Lame 1/2');
-                }
-                if (niveaux.indexOf('Lame 3') >= 0 || niveaux.indexOf('Lame 4') >= 0) {
-                    niveaux.push('Lame 3/4');
-                }
-                if (niveaux.indexOf('Lame 5') >= 0 || niveaux.indexOf('Lame 6') >= 0) {
-                    niveaux.push('Lame 5/6');
-                }
-                if (niveaux.indexOf('Lame 7') >= 0 || niveaux.indexOf('Lame 8') >= 0) {
-                    niveaux.push('Lame 7/8');
-                }
-            }
         @endif
 
         $(document).ready(function() {
@@ -141,7 +126,6 @@
                         document.getElementById(`${k}-0`).classList.add('hidden');
                         document.getElementById(`${k}-1`).classList.remove('hidden');
                         niveaux.push(niv[k]);
-                        hackNiveaux();
                         t.draw();
                     });
                     document.getElementById(`${k}-1`).style.cursor = 'pointer';
@@ -149,7 +133,6 @@
                         document.getElementById(`${k}-1`).classList.add('hidden');
                         document.getElementById(`${k}-0`).classList.remove('hidden');
                         niveaux = niveaux.filter((v) => v !== niv[k]);
-                        hackNiveaux();
                         t.draw();
                     });
                 }

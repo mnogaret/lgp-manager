@@ -4,7 +4,6 @@ namespace App\Tools;
 
 use App\Models\Adhesion;
 use App\Models\Commentaire;
-use App\Models\Document;
 use App\Models\Foyer;
 use App\Models\Groupe;
 use App\Models\Personne;
@@ -13,8 +12,6 @@ use App\Models\Saison;
 use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPUnit\Framework\isEmpty;
 
 class AdherentImporter
 {

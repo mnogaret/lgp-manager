@@ -98,7 +98,7 @@ class PersonneController extends Controller
             'numero_assurance' => 'nullable|string|max:255',
             'droit_image' => 'nullable|in:O,N',
             'numero_licence' => 'nullable|string|max:255',
-            'niveau' => 'nullable|in:Lame 1,Lame 2,Lame 3,Lame 4,Lame 5,Lame 6,Lame 7,Lame 8,Lame 1/2,Lame 3/4,Lame 5/6,Lame 7/8'
+            'niveau' => 'nullable|in:Patin Rouge,Lame 1,Lame 2,Lame 3,Lame 4,Lame 5,Lame 6,Lame 7,Lame 8'
         ]);
         $personne->update($validatedData);
 
