@@ -12,6 +12,10 @@
                 ],
             ],
             [
+                'title' => '23/01/2024',
+                'features' => ['Retrait de l’enum sur le niveau', 'Génération des listes pour le passage des lames'],
+            ],
+            [
                 'title' => '01/01/2024',
                 'features' => ['Retrait de l’enum sur la nationalité', 'Suppression des doublons de commentaire', 'Édition des adhérents'],
             ],
