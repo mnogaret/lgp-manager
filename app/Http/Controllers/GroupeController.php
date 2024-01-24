@@ -168,7 +168,6 @@ class GroupeController extends Controller
         for ($i = 0; $i < count($impression_defs); $i++) {
             $impression = $impression_defs[$i];
 
-
             $groupe_codes = $impression['groupes'];
 
             $impression['creneaux'] = Creneau::whereHas('groupes', function ($query) use ($groupe_codes) {
@@ -224,89 +223,127 @@ class GroupeController extends Controller
     {
         $impression_defs = [
             [
-                'nom' => 'Patin Rouge',
+                'groupe' => 'Baby',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
                 'groupes' => ['2023-baby-mar', '2023-baby-ven'],
-                'niveaux' => true,
             ],
             [
-                'nom' => 'Lame 1',
+                'groupe' => 'Lame 1',
+                'niveau' => 'Lame 1',
+                'niveau_null' => true,
                 'groupes' => ['2023-lame1'],
-                'niveaux' => true,
                 'to' => 'J',
             ],
             [
-                'nom' => 'Lame 1',
+                'groupe' => 'Lame 1',
+                'niveau' => 'Lame 1',
+                'niveau_null' => true,
                 'groupes' => ['2023-lame1'],
-                'niveaux' => true,
                 'from' => 'J',
                 'to' => 'P',
             ],
             [
-                'nom' => 'Lame 1',
+                'groupe' => 'Lame 1',
+                'niveau' => 'Lame 1',
+                'niveau_null' => true,
                 'groupes' => ['2023-lame1'],
-                'niveaux' => true,
                 'from' => 'P',
             ],
             [
-                'nom' => 'Lame 2',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 1',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 1', 'Lame 2'],
+            ],
+            [
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 2',
                 'niveau_null' => true,
-                'niveaux' => true,
+                'groupes' => ['2023-lame2+'],
                 'to' => 'D',
             ],
             [
-                'nom' => 'Lame 2',
-                'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 1', 'Lame 2'],
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 2',
                 'niveau_null' => true,
-                'niveaux' => true,
+                'groupes' => ['2023-lame2+'],
                 'from' => 'D',
                 'to' => 'L',
             ],
             [
-                'nom' => 'Lame 2',
-                'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 1', 'Lame 2'],
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 2',
                 'niveau_null' => true,
-                'niveaux' => true,
+                'groupes' => ['2023-lame2+'],
                 'from' => 'L',
             ],
             [
-                'nom' => 'Lame 3',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 3',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 3'],
-                'niveaux' => true,
             ],
             [
-                'nom' => 'Lame 4',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 4',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 4'],
-                'niveaux' => true,
             ],
             [
-                'nom' => 'Lame 5',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 5',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 5'],
-                'niveaux' => true,
             ],
             [
-                'nom' => 'Lame 6',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 6',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 6'],
-                'niveaux' => true,
             ],
             [
-                'nom' => 'Lame 7',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 7',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 7'],
-                'niveaux' => true,
             ],
             [
-                'nom' => 'Lame 8',
+                'groupe' => 'Lame 2 à 8',
+                'niveau' => 'Lame 8',
                 'groupes' => ['2023-lame2+'],
-                'niveau' => ['Lame 8'],
-                'niveaux' => true,
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+                'to' => 'D',
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+                'from' => 'D',
+                'to' => 'H',
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+                'from' => 'H',
+                'to' => 'N',
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+                'from' => 'N',
+                'to' => 'R',
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+                'from' => 'R',
             ]
         ];
 
@@ -336,9 +373,7 @@ class GroupeController extends Controller
                 if (isset($impression['niveau'])) {
                     $q = $q->where(function ($query) use ($impression) {
                         $query->where(function ($subquery) use ($impression) {
-                            if (isset($impression['niveau']) && count($impression['niveau']) > 0) {
-                                $subquery->whereIn('niveau', $impression['niveau']);
-                            }
+                            $subquery->where('niveau', $impression['niveau']);
                         });
                         if (isset($impression['niveau_null']) && $impression['niveau_null']) {
                             $query->orWhereNull('niveau');

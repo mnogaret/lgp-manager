@@ -14,7 +14,6 @@
     }
 
     table.adherents {
-        width: 100%;
         border: 1px solid black;
         border-collapse: collapse;
         margin: 0;
@@ -26,6 +25,11 @@
         border: 1px solid gray;
         border-collapse: collapse;
         margin: 0;
+        padding: 0;
+    }
+
+    table.adherents th div,
+    table.adherents td div {
         padding: 0.5mm 2mm;
     }
 
