@@ -37,7 +37,7 @@
             </p>
         </div>
 
-        <x-pdf-lames-adherents-table :impression="$impression" :adherents="$impression['adherents']" :niveaux="isset($impression['niveaux']) ? $impression['niveaux'] : false" :groupes="$sous_groupes" />
+        <x-pdf-lames-adherents-table :impression="$impression" :groupes="$sous_groupes" />
     @endforeach
 </body>
 

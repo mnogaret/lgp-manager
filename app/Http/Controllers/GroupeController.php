@@ -232,6 +232,20 @@ class GroupeController extends Controller
                 'nom' => 'Lame 1',
                 'groupes' => ['2023-lame1'],
                 'niveaux' => true,
+                'to' => 'J',
+            ],
+            [
+                'nom' => 'Lame 1',
+                'groupes' => ['2023-lame1'],
+                'niveaux' => true,
+                'from' => 'J',
+                'to' => 'P',
+            ],
+            [
+                'nom' => 'Lame 1',
+                'groupes' => ['2023-lame1'],
+                'niveaux' => true,
+                'from' => 'P',
             ],
             [
                 'nom' => 'Lame 2',
@@ -239,6 +253,24 @@ class GroupeController extends Controller
                 'niveau' => ['Lame 1', 'Lame 2'],
                 'niveau_null' => true,
                 'niveaux' => true,
+                'to' => 'D',
+            ],
+            [
+                'nom' => 'Lame 2',
+                'groupes' => ['2023-lame2+'],
+                'niveau' => ['Lame 1', 'Lame 2'],
+                'niveau_null' => true,
+                'niveaux' => true,
+                'from' => 'D',
+                'to' => 'L',
+            ],
+            [
+                'nom' => 'Lame 2',
+                'groupes' => ['2023-lame2+'],
+                'niveau' => ['Lame 1', 'Lame 2'],
+                'niveau_null' => true,
+                'niveaux' => true,
+                'from' => 'L',
             ],
             [
                 'nom' => 'Lame 3',
@@ -283,7 +315,6 @@ class GroupeController extends Controller
         for ($i = 0; $i < count($impression_defs); $i++) {
             $impression = $impression_defs[$i];
 
-
             $groupe_codes = $impression['groupes'];
 
             $impression['creneaux'] = Creneau::whereHas('groupes', function ($query) use ($groupe_codes) {
@@ -309,11 +340,20 @@ class GroupeController extends Controller
                                 $subquery->whereIn('niveau', $impression['niveau']);
                             }
                         });
-
                         if (isset($impression['niveau_null']) && $impression['niveau_null']) {
                             $query->orWhereNull('niveau');
                         }
                     });
+                }
+                if (isset($impression['from']))
+                {
+                    $from = $impression['from'];
+                    $q = $q->where('nom', '>=', $from);
+                }
+                if (isset($impression['to']))
+                {
+                    $to = $impression['to'];
+                    $q = $q->where('nom', '<', $to);
                 }
                 $adherents = $q->orderBy('nom')->orderBy('prenom')->get();
 

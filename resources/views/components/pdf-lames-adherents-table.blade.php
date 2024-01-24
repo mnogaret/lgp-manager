@@ -1,56 +1,4 @@
 @php
-    $niveau_colors = [
-        'Patin Rouge' => 'white',
-        'Lame 1' => 'white',
-        'Lame 2' => 'yellow',
-        'Lame 3' => 'orange',
-        'Lame 4' => 'green',
-        'Lame 5' => 'blue',
-        'Lame 6' => 'purple',
-        'Lame 7' => 'brown',
-        'Lame 8' => 'black',
-    ];
-
-    $etat_colors = [
-        'créé' => 'red',
-        'essai' => 'pink',
-        'complet' => 'yellow',
-        'réglé' => 'blue',
-        'validé' => 'green',
-    ];
-
-    $warning_colors = [
-        'créé' => 'red',
-        'complet' => 'red',
-        'réglé' => 'yellow',
-    ];
-
-    $short_groupe = [
-        '2023-baby-mar' => 'Mardi',
-        '2023-baby-ven' => 'Vendredi',
-        '2023-adulte-deb-mar' => 'Débutant',
-        '2023-adulte-deb-ven' => 'Débutant',
-        '2023-adulte-deb-sam' => 'Débutant',
-        '2023-adulte-int-mar' => 'Intermédiaire',
-        '2023-adulte-int-ven' => 'Intermédiaire',
-        '2023-adulte-int-sam' => 'Intermédiaire',
-        '2023-adulte-dan-mar' => 'Danseur',
-        '2023-adulte-dan-ven' => 'Danseur',
-        '2023-adulte-dan-sam' => 'Danseur',
-        '2023-adulte-sau-mar' => 'Sauteur',
-        '2023-adulte-sau-ven' => 'Sauteur',
-        '2023-adulte-sau-sam' => 'Sauteur',
-    ];
-
-    $groupe_color = [
-        'Mardi' => 'green',
-        'Vendredi' => 'blue',
-        'Débutant' => 'green',
-        'Intermédiaire' => 'yellow',
-        'Danseur' => 'blue',
-        'Sauteur' => 'red',
-    ];
-
     $etapes = [
         'Patin Rouge' => [
             'Je traverse la largeur de la piste',
@@ -122,11 +70,7 @@
             'Saut d’un tour (Au choix)',
         ]
     ];
-
-
-
 @endphp
-
 <table class="adherents">
     <thead>
         <tr>
@@ -142,9 +86,9 @@
             @php
                 $personne = null;
                 $adhesion = null;
-                if (isset($adherents[$i]))
+                if (isset($impression['adherents'][$i]))
                 {
-                    $personne = $adherents[$i];
+                    $personne = $impression['adherents'][$i];
                     $adhesion = $personne->adhesions[0];
                 }
             @endphp
