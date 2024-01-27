@@ -572,13 +572,26 @@ class AdherentImporter
             $change = true;
         }
 
-        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'date_certificat_medical', 'nom_assurance', 'numero_assurance', 'droit_image', 'niveau', 'numero_licence', 'foyer_id'] as $attribut) {
+        // Modifications affichées mais non appliquées
+        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'date_certificat_medical', 'nom_assurance', 'numero_assurance', 'droit_image', 'numero_licence', 'foyer_id'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $personne[$attribut] = $data[$attribut];
                 $change = true;
             } else if (isset($personne[$attribut]) && isset($data[$attribut]) && $personne[$attribut] !== $data[$attribut]) {
                 $this->traces['diff'][] = $attribut . " " . print_r($personne[$attribut], true) . " => " . print_r($data[$attribut], true);
                 $diff = true;
+            }
+        }
+
+        // Modifications appliquées
+        foreach (['niveau'] as $attribut) {
+            if (!isset($personne[$attribut]) && isset($data[$attribut])) {
+                $personne[$attribut] = $data[$attribut];
+                $change = true;
+            } else if (isset($personne[$attribut]) && isset($data[$attribut]) && $personne[$attribut] !== $data[$attribut]) {
+                $personne[$attribut] = $data[$attribut];
+                $this->traces['update'][] = $attribut . " " . print_r($personne[$attribut], true) . " => " . print_r($data[$attribut], true);
+                $change = true;
             }
         }
 
