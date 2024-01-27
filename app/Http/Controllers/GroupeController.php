@@ -312,14 +312,6 @@ class GroupeController extends Controller
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
                 'groupes' => ['2023-ados'],
-                'to' => 'D',
-            ],
-            [
-                'groupe' => 'Ados',
-                'niveau' => 'Patin Rouge',
-                'niveau_null' => true,
-                'groupes' => ['2023-ados'],
-                'from' => 'D',
                 'to' => 'H',
             ],
             [
@@ -328,23 +320,63 @@ class GroupeController extends Controller
                 'niveau_null' => true,
                 'groupes' => ['2023-ados'],
                 'from' => 'H',
-                'to' => 'N',
+                'to' => 'O',
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
                 'groupes' => ['2023-ados'],
-                'from' => 'N',
-                'to' => 'R',
+                'from' => 'O',
             ],
             [
                 'groupe' => 'Ados',
-                'niveau' => 'Patin Rouge',
+                'niveau' => 'Lame 1',
                 'niveau_null' => true,
                 'groupes' => ['2023-ados'],
-                'from' => 'R',
-            ]
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 2',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 3',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 4',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 5',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 6',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 7',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 8',
+                'niveau_null' => true,
+                'groupes' => ['2023-ados'],
+            ],
         ];
 
         $etats = Adhesion::ETAT_INSCRIT;

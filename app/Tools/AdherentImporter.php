@@ -576,7 +576,7 @@ class AdherentImporter
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $personne[$attribut] = $data[$attribut];
                 $change = true;
-            } else if (isset($personne[$attribut]) && isset($data[$attribut]) && mb_strtolower($personne[$attribut]) !== mb_strtolower($data[$attribut])) {
+            } else if (isset($personne[$attribut]) && isset($data[$attribut]) && $personne[$attribut] !== $data[$attribut]) {
                 $this->traces['diff'][] = $attribut . " " . print_r($personne[$attribut], true) . " => " . print_r($data[$attribut], true);
                 $diff = true;
             }
