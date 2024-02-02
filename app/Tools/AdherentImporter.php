@@ -587,10 +587,11 @@ class AdherentImporter
         foreach (['niveau'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $personne[$attribut] = $data[$attribut];
+                $this->traces['update'][] = $attribut . " " . " => " . print_r($data[$attribut], true);
                 $change = true;
             } else if (isset($personne[$attribut]) && isset($data[$attribut]) && $personne[$attribut] !== $data[$attribut]) {
-                $personne[$attribut] = $data[$attribut];
                 $this->traces['update'][] = $attribut . " " . print_r($personne[$attribut], true) . " => " . print_r($data[$attribut], true);
+                $personne[$attribut] = $data[$attribut];
                 $change = true;
             }
         }
