@@ -233,22 +233,14 @@ class GroupeController extends Controller
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
                 'groupes' => ['2023-lame1'],
-                'to' => 'E',
+                'to' => 'M',
             ],
             [
                 'groupe' => 'Lame 1',
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
                 'groupes' => ['2023-lame1'],
-                'from' => 'E',
-                'to' => 'N',
-            ],
-            [
-                'groupe' => 'Lame 1',
-                'niveau' => 'Patin Rouge',
-                'niveau_null' => true,
-                'groupes' => ['2023-lame1'],
-                'from' => 'N',
+                'from' => 'M',
             ],
             [
                 'groupe' => 'Lame 1',
@@ -431,6 +423,16 @@ class GroupeController extends Controller
                 $impressions[] = $impression;
             }
         }
+
+        $impressions[] = [ 'niveau' => 'Patin Rouge' ];
+        $impressions[] = [ 'niveau' => 'Lame 1' ];
+        $impressions[] = [ 'niveau' => 'Lame 2' ];
+        $impressions[] = [ 'niveau' => 'Lame 3' ];
+        $impressions[] = [ 'niveau' => 'Lame 4' ];
+        $impressions[] = [ 'niveau' => 'Lame 5' ];
+        $impressions[] = [ 'niveau' => 'Lame 6' ];
+        $impressions[] = [ 'niveau' => 'Lame 7' ];
+        $impressions[] = [ 'niveau' => 'Lame 8' ];
 
         $pdf = Pdf::loadView('groupe.lames_pdf', ['impressions' => $impressions]);
 

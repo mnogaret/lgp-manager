@@ -21,6 +21,7 @@
 <body>
     @foreach ($impressions as $impression)
         @php
+        if (isset($impression['groupes'])) {
             $sous_groupes = count($impression['groupes']) > 1;
             $newpage = $impression['groupe'] !== 'Baby';
             $lettres = "";
@@ -31,16 +32,22 @@
             } else if (isset($impression['to'])) {
                 $lettres .= " - jusqu'à " . chr(ord($impression['to'])-1);
             }
+            $titre = "Groupe " . $impression['groupe'] . " - Niveau " . $impression['niveau'] . (isset($impression['niveau_null']) ? " (ou sans niveau)" : "") .$lettres;
+        } else {
+            $titre = "Niveau " . $impression['niveau'];
+        }
         @endphp
         <div class="entete {{ $newpage ? 'newpage' : 'samepage' }}">
-            <h1>Groupe {{ $impression['groupe'] }} - Niveau {{ $impression['niveau'] }}{{ isset($impression['niveau_null']) ? " (ou sans niveau)" : "" }}{{ $lettres }}</h1>
+            <h1>{{ $titre }}</h1>
             <p>
-                Le
-                @foreach ($impression['creneaux'] as $creneau)
-                    <span>{{ strtolower($creneau->jour) }} de {{ Carbon::parse($creneau->heure_debut)->format('H\hi') }}
-                        à
-                        {{ Carbon::parse($creneau->heure_fin)->format('H\hi') }}</span>{{ $loop->remaining > 1 ? ', le' : (!$loop->last ? ' et le' : '') }}
-                @endforeach
+                @if (isset($impression['creneaux']))
+                    Le
+                    @foreach ($impression['creneaux'] as $creneau)
+                        <span>{{ strtolower($creneau->jour) }} de {{ Carbon::parse($creneau->heure_debut)->format('H\hi') }}
+                            à
+                            {{ Carbon::parse($creneau->heure_fin)->format('H\hi') }}</span>{{ $loop->remaining > 1 ? ', le' : (!$loop->last ? ' et le' : '') }}
+                    @endforeach
+                @endif
             </p>
         </div>
 
