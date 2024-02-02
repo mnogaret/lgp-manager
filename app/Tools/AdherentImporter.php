@@ -586,8 +586,8 @@ class AdherentImporter
         // Modifications appliquées
         foreach (['niveau'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
+                $this->traces['update'][] = $attribut . " => " . print_r($data[$attribut], true);
                 $personne[$attribut] = $data[$attribut];
-                $this->traces['update'][] = $attribut . " " . " => " . print_r($data[$attribut], true);
                 $change = true;
             } else if (isset($personne[$attribut]) && isset($data[$attribut]) && $personne[$attribut] !== $data[$attribut]) {
                 $this->traces['update'][] = $attribut . " " . print_r($personne[$attribut], true) . " => " . print_r($data[$attribut], true);
@@ -596,13 +596,13 @@ class AdherentImporter
             }
         }
 
-        if ($diff) {
-            $personne->refresh();
-            $this->traces['diffPersonne']++;
-        } else
         if ($change) {
             $personne->save();
             $this->traces['changedPersonne']++;
+        } else
+        if ($diff) {
+            $personne->refresh();
+            $this->traces['diffPersonne']++;
         } else {
             $this->traces['existingPersonne']++;
         }
