@@ -223,6 +223,13 @@ class GroupeController extends Controller
     {
         $impression_defs = [
             [
+                'groupe' => 'Adulte danseur du mardi',
+                'niveau' => 'Lame 8',
+                'niveau_null' => true,
+                'groupes' => ['2023-adulte-dan-mar'],
+            ]];
+/*        $impression_defs = [
+            [
                 'groupe' => 'Baby',
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
@@ -368,7 +375,7 @@ class GroupeController extends Controller
                 'niveau' => 'Lame 8',
                 'groupes' => ['2023-ados'],
             ],
-        ];
+        ];*/
 
         $etats = Adhesion::ETAT_INSCRIT;
         $impressions = [];

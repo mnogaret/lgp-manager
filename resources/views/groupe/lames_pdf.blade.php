@@ -19,11 +19,13 @@
 </head>
 
 <body>
+    @php
+    $newpage = false;
+    @endphp
     @foreach ($impressions as $impression)
         @php
         if (isset($impression['groupes'])) {
             $sous_groupes = count($impression['groupes']) > 1;
-            $newpage = $impression['groupe'] !== 'Baby';
             $lettres = "";
             if (isset($impression['from']) && isset($impression['to'])) {
                 $lettres = " - de " . $impression['from'] . " à " . chr(ord($impression['to'])-1);
@@ -52,6 +54,9 @@
         </div>
 
         <x-pdf-lames-adherents-table :impression="$impression" :groupes="$sous_groupes" />
+        @php
+            $newpage = true;
+        @endphp
     @endforeach
 </body>
 
