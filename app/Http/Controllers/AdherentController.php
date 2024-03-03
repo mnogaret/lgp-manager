@@ -48,7 +48,7 @@ class AdherentController extends Controller
     public function show(string $id)
     {
         // Récupérer la personne depuis la base de données
-        $adherent = Personne::with('adhesions.groupe')->with('documents')->with('foyer.membres')->with('foyer.reglements')->findOrFail($id);
+        $adherent = Personne::with('adhesions.groupe')->with('documents')->with('passages')->with('foyer.membres')->with('foyer.reglements')->findOrFail($id);
 
         // Passer la personne à la vue et l'afficher
         return view('adherent.show', ['adherent' => $adherent]);

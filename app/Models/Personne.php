@@ -22,6 +22,11 @@ class Personne extends Model
         return $this->hasMany(Document::class, 'personne_id');
     }
 
+    public function passages()
+    {
+        return $this->hasMany(PassageDeLame::class, 'personne_id');
+    }
+
     public function foyer()
     {
         return $this->belongsTo(Foyer::class);

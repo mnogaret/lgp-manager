@@ -67,5 +67,15 @@
             Facture (brouillon, non définitif)
         </a>
     @endif
+
+    @if (count($personne->passages) > 0)
+        <h5 class="my-4 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Passages le lame</h5>
+        <ul>
+            @foreach ($personne->passages as $passage)
+                <x-passage-li :passage="$passage" />
+            @endforeach
+        </ul>
+    @endif
+
 </div>
 </a>
