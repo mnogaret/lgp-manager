@@ -53,6 +53,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('groupe/{id}/pdf', [GroupeController::class, 'pdf'])->name('groupe.pdf');
     Route::get('groupes/pdf', [GroupeController::class, 'groupes_pdf'])->name('groupes.pdf');
     Route::get('groupes/lames-pdf', [GroupeController::class, 'lames_pdf'])->name('groupes.lames-pdf');
+    Route::get('passages/lames-pdf', [PassageDeLameController::class, 'lames_pdf'])->name('passages.lames-pdf');
 
     Route::get('/adhesion/{adhesion}/change-etat', [AdhesionController::class, 'changeEtat'])->name('adhesion.changeEtat');
 
