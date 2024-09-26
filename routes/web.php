@@ -60,7 +60,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/adhesion/{adhesion}/change-etat', [AdhesionController::class, 'changeEtat'])->name('adhesion.changeEtat');
 
-    Route::post('/import-adherents', [AdherentController::class, 'import'])->name('import-adherents');
+    Route::post('/import-adherents-2023', [AdherentController::class, 'import2023'])->name('import-adherents-2023');
+    Route::post('/import-adherents-2024', [AdherentController::class, 'import2024'])->name('import-adherents-2024');
     Route::post('/scan-drive-adherents', [AdherentController::class, 'scanDrive'])->name('scan-drive-adherents');
     Route::get('/facture/{id}', [AdherentController::class, 'generateFacture']);
 

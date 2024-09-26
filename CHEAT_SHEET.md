@@ -20,3 +20,11 @@ php artisan make:model MaTable
 docker-compose exec web php artisan migrate:reset
 docker-compose exec web php artisan migrate
 docker-compose exec web php artisan db:seed --class=SaisonSeeder
+
+# OVH
+
+Vérifier la version de PHP
+cat ~/.ovhconfig
+
+Exemple de commande
+/usr/local/php8.2/bin/php artisan db:seed --class=Saison2024Seeder

@@ -13,7 +13,7 @@ use DateTime;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 
-class AdherentImporter
+class Adherent2023Importer
 {
     public $traces = [
         'newPersonne' => 0,

@@ -33,11 +33,3 @@ http://localhost:8000
 
 docker-compose exec web php artisan migrate
 docker-compose exec web php artisan db:seed --class=SaisonSeeder
-
-# DONE
-
-- Nettoyer le bazar que m'a mis WindMill
-- Paufiner le layout
-- Faire un dashboard minimal avec rien dedans
-- Page d'import de personnes
-- Notion de foyer

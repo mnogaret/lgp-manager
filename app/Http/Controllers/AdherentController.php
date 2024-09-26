@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Personne;
 use App\Tools\AdherentDriveScanner;
-use App\Tools\AdherentImporter;
+use App\Tools\Adherent2023Importer;
+use App\Tools\Adherent2024Importer;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Illuminate\Http\Request;
@@ -93,7 +94,7 @@ class AdherentController extends Controller
     {
         //
     }
-    public function import(Request $request)
+    public function import2024(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'csv_file' => 'required|mimes:csv,txt|max:2048',
@@ -102,7 +103,27 @@ class AdherentController extends Controller
             return redirect()->back()->withErrors($validator);
         }
         $path = $request->file('csv_file')->getRealPath();
-        $importer = new AdherentImporter();
+        $importer = new Adherent2024Importer();
+        try {
+            $importer->from_csv(file_get_contents($path));
+        } catch (Exception $e) {
+            dd($e);
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+
+        return redirect()->back()->with('success', print_r($importer->traces, true));
+    }
+
+    public function import2023(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'csv_file' => 'required|mimes:csv,txt|max:2048',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator);
+        }
+        $path = $request->file('csv_file')->getRealPath();
+        $importer = new Adherent2023Importer();
         try {
             $importer->from_csv(file_get_contents($path));
         } catch (Exception $e) {

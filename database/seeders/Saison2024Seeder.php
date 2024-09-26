@@ -26,18 +26,18 @@ class Saison2024Seeder extends Seeder
         $adulte_deb_mer = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte débutant',      'code' => '2024-adulte-deb-mer', 'nom' => 'Adulte débutant du mercredi',    'prix' => 255]);
         $adulte_deb_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte débutant',      'code' => '2024-adulte-deb-sam', 'nom' => 'Adulte débutant de samedi',      'prix' => 255]);
 
-        $adulte_int_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte intermédiaire', 'code' => '2023-adulte-int-mar', 'nom' => 'Adulte intermédiaire du mardi',  'prix' => 255]);
-        $adulte_int_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte intermédiaire', 'code' => '2023-adulte-int-sam', 'nom' => 'Adulte intermédiaire de samedi', 'prix' => 255]);
+        $adulte_int_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte intermédiaire', 'code' => '2024-adulte-int-mar', 'nom' => 'Adulte intermédiaire du mardi',  'prix' => 255]);
+        $adulte_int_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte intermédiaire', 'code' => '2024-adulte-int-sam', 'nom' => 'Adulte intermédiaire de samedi', 'prix' => 255]);
 
-        $adulte_dan_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2023-adulte-dan-mar', 'nom' => 'Adulte danseur du mardi',        'prix' => 255]);
-        $adulte_dan_mer = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2023-adulte-dan-mer', 'nom' => 'Adulte danseur du mercredi',     'prix' => 255]);
+        $adulte_dan_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2024-adulte-dan-mar', 'nom' => 'Adulte danseur du mardi',        'prix' => 255]);
+        $adulte_dan_mer = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte danseur',       'code' => '2024-adulte-dan-mer', 'nom' => 'Adulte danseur du mercredi',     'prix' => 255]);
 
-        $adulte_sau_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2023-adulte-sau-mar', 'nom' => 'Adulte sauteur du mardi',        'prix' => 255]);
-        $adulte_sau_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2023-adulte-sau-sam', 'nom' => 'Adulte sauteur du samedi',       'prix' => 255]);
+        $adulte_sau_mar = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2024-adulte-sau-mar', 'nom' => 'Adulte sauteur du mardi',        'prix' => 255]);
+        $adulte_sau_sam = Groupe::create(['saison_id' => $saison->id, 'type' => 'Adulte sauteur',       'code' => '2024-adulte-sau-sam', 'nom' => 'Adulte sauteur du samedi',       'prix' => 255]);
 
-        $ppg_mar1 =       Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2023-ppg-mar-1',      'nom' => 'PPG du mardi 1',                 'prix' => 210]);
-        $ppg_mar2 =       Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2023-ppg-mar-2',      'nom' => 'PPG du mardi 2',                 'prix' => 210]);
-        $ppg_mer =        Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2023-ppg-mer',        'nom' => 'PPG du mercredi',                'prix' => 210]);
+        $ppg_mar1 =       Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2024-ppg-mar-1',      'nom' => 'PPG du mardi 1',                 'prix' => 210]);
+        $ppg_mar2 =       Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2024-ppg-mar-2',      'nom' => 'PPG du mardi 2',                 'prix' => 210]);
+        $ppg_mer =        Groupe::create(['saison_id' => $saison->id, 'type' => 'PPG',                  'code' => '2024-ppg-mer',        'nom' => 'PPG du mercredi',                'prix' => 210]);
 
         // Créer des créneaux pour cette saison
         $creneau = Creneau::create(['saison_id' => $saison->id, 'jour' => 'Mardi',    'heure_debut' => '18:15:00', 'heure_fin' => '19:00:00', ]);
