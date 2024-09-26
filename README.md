@@ -27,6 +27,8 @@ Lancer Docker Desktop
 docker-compose up -d
 docker-compose exec web php artisan key:generate
 
+http://localhost:8000
+
 # Commandes artisan
 
 docker-compose exec web php artisan migrate

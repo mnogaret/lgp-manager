@@ -6,10 +6,15 @@
             [
                 'title' => 'TODO',
                 'features' => [
-                    'Gestion des pointages',
-                    'Affichage des pointages',
-                    'Suivi de la facturation',
+                    'Nouvelle saison 2024-2025',
+                    'Saison switch',
+                    'Nouveau format d\'import saison 2024-2025',
+                    'Génération des badges',
                 ],
+            ],
+            [
+                'title' => '26/09/2024',
+                'features' => ['Nouvelle saison 2024-2025'],
             ],
             [
                 'title' => '03/03/2024',

@@ -7,22 +7,14 @@ use App\Models\Groupe;
 use App\Models\Saison;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
-class SaisonSeeder extends Seeder
+class Saison2023Seeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-//        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-//        DB::table('groupe_creneau')->truncate();
-//        Creneau::truncate();
-//        Groupe::truncate();
-//        Saison::truncate();
-//        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
         $saison = Saison::create(['nom' => '2023 - 2024']);
 
         $baby_mar =       Groupe::create(['saison_id' => $saison->id, 'type' => 'Baby',                 'code' => '2023-baby-mar',       'nom' => 'Baby du mardi',                    'prix' => 335]);
