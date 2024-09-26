@@ -8,6 +8,7 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\GroupeController;
 use App\Http\Controllers\PassageDeLameController;
 use App\Http\Controllers\PointageController;
+use App\Http\Controllers\SaisonController;
 use App\Http\Controllers\SeanceController;
 
 /*
@@ -28,7 +29,7 @@ Route::get('/pointage/{code}', [PointageController::class, 'pointage'])->name('p
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('/welcome');
-    });
+    })->name('welcome');
     Route::get('/stats', function () {
         return view('/stats');
     });
@@ -46,6 +47,8 @@ Route::middleware(['auth'])->group(function () {
     // DELETE        /users/{user}               destroy users.destroy
     Route::resource('adherent', AdherentController::class);
     Route::resource('groupe', GroupeController::class);
+
+    Route::post('/saison/select', [SaisonController::class, 'select'])->name('saison.select');
 
     Route::get('/personne/{personne}/edit', [PersonneController::class, 'edit'])->name('personne.edit');
     Route::put('/personne/{personne}', [PersonneController::class, 'update'])->name('personne.update');

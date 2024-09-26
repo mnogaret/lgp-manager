@@ -31,6 +31,7 @@ $menu = [
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <x-navbar-logo />
         <div class="flex items-center md:order-2 space-x-2">
+            <x-navbar-saison />
             <x-navbar-dark />
             <x-navbar-user />
         </div>

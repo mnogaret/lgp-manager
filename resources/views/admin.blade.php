@@ -27,7 +27,7 @@
 @endif
 <div class="container px-6 mx-auto grid">
     <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Administration</h2>
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports d’adhérents</h4>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports d’adhérents 2023</h4>
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Depuis un extrait CSV du fichier de suivi</span>
@@ -40,14 +40,14 @@
             </form>
         </label>
     </div>
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Scan des documents du drive</h4>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Scan des documents du drive 2023</h4>
     <form action="{{ route('scan-drive-adherents') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="relative text-gray-500 focus-within:text-purple-600">
             <button class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" type="submit">Scanner</button>
         </div>
     </form>
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports de Passages de lame</h4>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports de Passages de lame 2023</h4>
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <label class="block text-sm">
             <span class="text-gray-700 dark:text-gray-400">Depuis un extrait CSV du fichier de suivi des passages de lame</span>

@@ -20,9 +20,14 @@ class GroupeController extends Controller
      */
     public function index()
     {
+        $saisonId = session('saison_id');
+        if (!$saisonId) {
+            return redirect()->route('welcome')->withErrors('Aucune saison sélectionnée');
+        }
+
         $groupes = Groupe::with(['adhesions.personne', 'seances' => function ($query) {
             $query->where('statut', 'Ouvert');
-        }])->get();
+        }])->where('saison_id', $saisonId)->get();
 
         return view('groupe.index', ['groupes' => $groupes]);
     }

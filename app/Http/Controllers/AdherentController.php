@@ -22,7 +22,23 @@ class AdherentController extends Controller
      */
     public function index()
     {
-        $adherents = Personne::with('adhesions.groupe')->has('adhesions')->get();
+        $saisonId = session('saison_id');
+        if (!$saisonId) {
+            return redirect()->route('welcome')->withErrors('Aucune saison sélectionnée');
+        }
+
+        // Récupérer les adhérents qui ont des adhésions dans la saison active
+        $adherents = Personne::whereHas('adhesions.groupe', function ($query) use ($saisonId) {
+            $query->where('saison_id', $saisonId);
+        })
+        ->with(['adhesions' => function($query) use ($saisonId) {
+            // Filtrer les adhésions pour ne récupérer que celles de la saison active
+            $query->whereHas('groupe', function($query) use ($saisonId) {
+                $query->where('saison_id', $saisonId);
+            });
+        }])
+        ->get();
+
         return view('adherent.index', ['adherents' => $adherents]);
     }
 

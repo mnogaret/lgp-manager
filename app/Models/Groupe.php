@@ -15,6 +15,11 @@ class Groupe extends Model
         return $this->belongsToMany(Creneau::class, 'groupe_creneau');
     }
 
+    public function saison()
+    {
+        return $this->belongsTo(Saison::class);
+    }
+
     public function seances()
     {
         return $this->hasMany(Seance::class, 'groupe_id');
