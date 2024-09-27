@@ -19,10 +19,32 @@ class AdherentDriveScanner
         'loops' => 0,
         'pages' => [],
     ];
-    public function from_drive()
+
+    public function from_drives()
+    {
+        $files = [];
+
+        // 2023
+        // $files = array_merge($files, $this->from_drive("1LIrj3Z5cWdZDo30_xlLexRXoPlTRfzAT"));
+
+        // 2024
+        $files = array_merge($files, $this->from_drive("1Fwh4Hlt4gHYmcz0bHvhSZ4KUS6WSl1Op")); // A
+        $files = array_merge($files, $this->from_drive("1Il_-cd2QuIREQTy0fpnOrbiwR7wfwP-M")); // B
+        $files = array_merge($files, $this->from_drive("1YKtIuVDdv2XzGdMiobk4Hcjxn2G6VwTN")); // C
+        $files = array_merge($files, $this->from_drive("1bvywvVMhXRN1F1t637NpAlIx6ulsPkf4")); // DE
+        $files = array_merge($files, $this->from_drive("1gIVuHQnTh406graBk_epXkVwLXyLTknH")); // FGH
+        $files = array_merge($files, $this->from_drive("1GCxY5xxrptqXrHXmhQFwJMRhF4j9giQ3")); // IJKL
+        $files = array_merge($files, $this->from_drive("14Yfom6gnhzOng4M23HVPaiPxpcQgfvTD")); // M
+        $files = array_merge($files, $this->from_drive("1VR72-9Bel7Tw8nyJ_8c680Ls5zb59AmO")); // NOPQ
+        $files = array_merge($files, $this->from_drive("1q-Ig85tyzMEC1FuN7Q7_BBqsJKgrvfb4")); // RS
+        $files = array_merge($files, $this->from_drive("1KLCYEvPnToW1RHrw82ASfI-yKsmzb1xS")); // TUVWXYZ
+
+        return $files;
+    }
+
+    public function from_drive($folderId)
     {
         $driveId = "0ABdZPtRW2HpGUk9PVA";
-        $folderId = "1LIrj3Z5cWdZDo30_xlLexRXoPlTRfzAT";
         $token = session('google_token');
         if (!$token) {
             throw new \Exception("Token Google manquant");
@@ -64,7 +86,7 @@ class AdherentDriveScanner
 
     private function handle_file($name, $url, $date)
     {
-        if (preg_match('/^2023 - ([-A-ZÉÇÈ\'’ ]+) ([A-ZÉ][-a-zéïèë ]+([- ][A-ZÉ][-a-zéïèë ]+)*) - (Devis|Attestation Inscription|Licence|CNI|CAF|QM|Autorisations et Règlement|Autorisations|Assurance|CM|Attestation Sport|Règlement|QM et Règlement|QM et Autorisations|QM, Autorisations et Licence|Formulaire|Attestation - Recu|QM, Autorisations et Règlement|QM, CM et Règlement|QM, CM et Autorisations|Pass\'Sport|Carte Région|RIB|Remboursement|Permanence|Justificatif de départ|Pass\'Région|Règlement polaire|Formulaire et Autorisations|Formulaire et QM|Aide|Formulaire, QM et Autorisations)( - ([^\.]+))?\.(pdf|jpg|jpeg|JPG|png|PNG|bmp|docx)$/u', $name, $matches)) {
+        if (preg_match('/^2024 - ([-A-ZÉÇÈ\'’ ]+) ([A-ZÉ][-a-zéïèë ]+([- ][A-ZÉ][-a-zéïèë ]+)*) - (Devis|Attestation Inscription|Licence|CNI|CAF|QM|Autorisations et Règlement|Autorisations|Assurance|CM|Attestation Sport|Règlement|QM et Règlement|QM et Autorisations|QM, Autorisations et Licence|Formulaire|Attestation - Recu|QM, Autorisations et Règlement|QM, CM et Règlement|QM, CM et Autorisations|Pass\'Sport|Carte Région|RIB|Remboursement|Permanence|Justificatif de départ|Pass\'Région|Règlement polaire|Formulaire et Autorisations|Formulaire et QM|Aide|Formulaire, QM et Autorisations|Photo)( - ([^\.]+))?\.(pdf|jpg|jpeg|JPG|png|PNG|bmp|docx|HEIC|heic)$/u', $name, $matches)) {
             $nom = $matches[1];
             $prenom = $matches[2];
             $type = $matches[4];
@@ -72,7 +94,7 @@ class AdherentDriveScanner
             if (!$nom || !$prenom) {
                 return null;
             }
-            $saison = Saison::where(['nom' => '2023 - 2024'])->first();
+            $saison = Saison::where(['nom' => '2024 - 2025'])->first();
             $personne = Personne::where('nom', $nom)->where('prenom', $prenom)->first();
             if (!$personne) {
                 $this->traces['personne_not_found'][] = $nom . ' ' . $prenom;

@@ -137,7 +137,7 @@ class AdherentController extends Controller
     public function scanDrive(Request $request)
     {
         $scanner = new AdherentDriveScanner();
-        $scanner->from_drive();
+        $scanner->from_drives();
         return redirect()->back()->with('success', print_r($scanner->traces, true));
     }
 

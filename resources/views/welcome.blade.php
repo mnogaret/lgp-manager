@@ -10,6 +10,10 @@
                 ],
             ],
             [
+                'title' => '27/09/2024',
+                'features' => ['Scan des documents 2024'],
+            ],
+            [
                 'title' => '26/09/2024',
                 'features' => ['Nouvelle saison 2024-2025', 'Saison switch', 'Nouveau format d\'import saison 2024-2025'],
             ],
