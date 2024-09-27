@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdherentController;
 use App\Http\Controllers\AdhesionController;
+use App\Http\Controllers\BadgesController;
 use App\Http\Controllers\PersonneController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\GroupeController;
@@ -57,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('groupes/pdf', [GroupeController::class, 'groupes_pdf'])->name('groupes.pdf');
     Route::get('groupes/lames-pdf', [GroupeController::class, 'lames_pdf'])->name('groupes.lames-pdf');
     Route::get('passages/lames-pdf', [PassageDeLameController::class, 'lames_pdf'])->name('passages.lames-pdf');
+    Route::get('badges/pdf', [BadgesController::class, 'pdf'])->name('badges.pdf');
 
     Route::get('/adhesion/{adhesion}/change-etat', [AdhesionController::class, 'changeEtat'])->name('adhesion.changeEtat');
 

@@ -1,6 +1,7 @@
 <?php
 $colors = [
     'Sans niveau' => 'white',
+    'Patin Bleu' => 'white',
     'Patin Rouge' => 'white',
     'Lame 1' => 'white',
     'Lame 2' => 'yellow',
