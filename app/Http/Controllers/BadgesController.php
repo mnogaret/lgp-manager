@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Adhesion;
-use App\Models\Creneau;
-use App\Models\Groupe;
-use App\Models\PassageDeLame;
 use App\Models\Personne;
-use App\Tools\PassageDeLameImporter;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class BadgesController extends Controller
 {
     public function pdf()
     {
+        $saisonId = session('saison_id');
+        if (!$saisonId) {
+            return redirect()->route('welcome')->withErrors('Aucune saison sélectionnée');
+        }
+
         $groupes = [
             '2024-baby',
             '2024-initiation1',
@@ -24,14 +21,21 @@ class BadgesController extends Controller
             '2024-ados',
         ];
 
-        // Récupérer les adhérents qui sont dans les groupes spécifiés et dont l'adhésion est validée
-        $adherents = Personne::whereHas('adhesions', function($query) use ($groupes) {
-            $query->whereHas('groupe', function($query) use ($groupes) {
-                // Filtrer selon les groupes
-                $query->whereIn('code', $groupes);
+        $adherents = Personne::whereHas('adhesions', function($query) use ($groupes, $saisonId) {
+            $query->whereHas('groupe', function($query) use ($groupes, $saisonId) {
+                // Filtrer selon les groupes et la saison active
+                $query->whereIn('code', $groupes)
+                      ->where('saison_id', $saisonId); // Filtrer par la saison active
             })
             ->where('etat', 'validé'); // Filtrer par l'état de l'adhésion (ici 'validée')
-        })->with('adhesions.groupe')->get();
+        })->with(['adhesions' => function($query) use ($saisonId) {
+            // Ne charger que les adhésions de la saison active
+            $query->whereHas('groupe', function($query) use ($saisonId) {
+                $query->where('saison_id', $saisonId);
+            });
+        }])->get();
+
+        // TODO ajouter la photo
 
         return Pdf::loadView('badges/pdf', ['adherents' => $adherents])->download(date('Ymd') . '-badges.pdf');
     }
