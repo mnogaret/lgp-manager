@@ -3,7 +3,6 @@
 @section('content')
     <h1>{{ $adherent->prenom }} {{ $adherent->nom }}</h1>
 
-    <p><strong>Date de naissance:</strong> {{ $adherent->date_naissance }}</p>
     <p><strong>Numéro de licence:</strong> {{ $adherent->numero_licence }}</p>
     <p><strong>Niveau:</strong> {{ $adherent->niveau }}</p>
 
