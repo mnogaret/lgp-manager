@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdherentController;
 use App\Http\Controllers\AdhesionController;
 use App\Http\Controllers\BadgesController;
+use App\Http\Controllers\FicheController;
 use App\Http\Controllers\PersonneController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\GroupeController;
@@ -27,6 +28,7 @@ Route::get('/login', [GoogleAuthController::class, 'redirectToGoogle'])->name('l
 Route::get('auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 Route::get('/logout', [GoogleAuthController::class, 'logout']);
 Route::get('/pointage/{code}', [PointageController::class, 'pointage'])->name('pointage');
+Route::get('/fiche/{hash_code}', [FicheController::class, 'show']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return view('/welcome');

@@ -106,7 +106,7 @@ class BadgesController extends Controller
                         $adhesion->groupe->nom,
                         $adherent->niveau ?? 'Débutant',
                         '.\\\\photos\\\\' . $this->getPhotoName($adherent),
-                        'https://manager.lyonglacepatinage.fr/adherent/' . $adherent->hash_code,
+                        'https://manager.lyonglacepatinage.fr/fiche/' . $adherent->hash_code,
                     ], ';');
                 }
             }
