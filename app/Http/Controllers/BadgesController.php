@@ -90,7 +90,7 @@ class BadgesController extends Controller
             fwrite($file, "\xEF\xBB\xBF"); // Ajoute le BOM UTF-8 (facultatif)
 
             // Première ligne avec les noms des colonnes
-            fputcsv($file, ['Email', 'Nom', 'Prénom', 'Date de naissance', 'Sexe', 'Licence', 'Section', 'Groupe', 'Médaille obtenue', 'Photo', 'QR code'], ';');
+            fputcsv($file, ['Email', 'Nom', 'Prénom', 'Date de naissance', 'Sexe', 'Licence', 'Section', 'Groupe', 'Niveau', 'Photo', 'QR code'], ';');
 
             // Parcours de la collection et ajout des lignes CSV
             foreach ($adherents as $adherent) {
