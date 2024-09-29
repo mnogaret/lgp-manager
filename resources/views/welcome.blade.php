@@ -6,8 +6,12 @@
             [
                 'title' => 'TODO',
                 'features' => [
-                    'Génération des badges',
+                    'Refacto nécessaire',
                 ],
+            ],
+            [
+                'title' => '29/09/2024',
+                'features' => ['Gestion des badges (génération csv et zip des photos)'],
             ],
             [
                 'title' => '27/09/2024',

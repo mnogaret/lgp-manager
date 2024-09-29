@@ -22,6 +22,9 @@ class AdherentDriveScanner
 
     public function from_drives()
     {
+        // TODO il faudra retirer ça un jour...
+        Document::where('type', 'Photo')->delete();
+
         $files = [];
 
         // 2023

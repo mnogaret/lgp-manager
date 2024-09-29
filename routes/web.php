@@ -59,6 +59,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('groupes/lames-pdf', [GroupeController::class, 'lames_pdf'])->name('groupes.lames-pdf');
     Route::get('passages/lames-pdf', [PassageDeLameController::class, 'lames_pdf'])->name('passages.lames-pdf');
     Route::get('badges/pdf', [BadgesController::class, 'pdf'])->name('badges.pdf');
+    Route::get('badges/csv', [BadgesController::class, 'csv'])->name('badges.csv');
+    Route::get('badges/zip', [BadgesController::class, 'zip'])->name('badges.zip');
 
     Route::get('/adhesion/{adhesion}/change-etat', [AdhesionController::class, 'changeEtat'])->name('adhesion.changeEtat');
 

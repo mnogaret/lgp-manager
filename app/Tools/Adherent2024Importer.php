@@ -85,6 +85,8 @@ class Adherent2024Importer
                     'numero_licence' => $raw_adherent['N° Licence'],
                     'niveau' => empty($raw_adherent['Médaille obtenue']) ? null : $raw_adherent['Médaille obtenue'],
                     'foyer_id' => $foyer_id,
+                    'badge' => $raw_adherent['Badge'],
+                    'hash_code' => $raw_adherent['Hash'],
                 ],
             );
 
@@ -267,7 +269,7 @@ class Adherent2024Importer
         if ($raw_adherent['Liste d’attente'] === 'Oui') {
             return 'liste d’attente';
         }
-        $complet = ($raw_adherent['QM'] === 'Oui' || !empty($raw_adherent['CM'])) && ($raw_adherent['Autorisations'] !== 'Oui' || $raw_adherent['Autorisations'] !== 'Pas droit à l’image');
+        $complet = ($raw_adherent['QM'] === 'Oui' || !empty($raw_adherent['CM'])) && ($raw_adherent['Autorisations'] !== 'Oui' || $raw_adherent['Autorisations'] !== 'Pas droit à l’image') && $raw_adherent['Photo'] !== 'Non';
         $regle = $raw_adherent['Règlement'] === 'Acquitté' || $raw_adherent['Règlement'] === 'Reçu';
         if ($complet && $regle) {
             return "validé";
@@ -383,7 +385,7 @@ class Adherent2024Importer
         }
 
         // Modifications appliquées
-        foreach (['niveau'] as $attribut) {
+        foreach (['niveau', 'hash_code', 'badge'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $this->traces['update'][] = $attribut . " => " . print_r($data[$attribut], true);
                 $personne[$attribut] = $data[$attribut];
