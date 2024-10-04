@@ -1,5 +1,6 @@
 @php
     $niveau_colors = [
+        'Patin Bleu' => 'white',
         'Patin Rouge' => 'white',
         'Lame 1' => 'white',
         'Lame 2' => 'yellow',

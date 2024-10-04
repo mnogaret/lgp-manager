@@ -118,6 +118,144 @@ class BadgesController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
+    public function adultes_csv()
+    {
+        $saisonId = session('saison_id');
+        if (!$saisonId) {
+            return redirect()->route('welcome')->withErrors('Aucune saison sélectionnée');
+        }
+
+        $groupe_types = [
+            'Adulte débutant',
+            'Adulte intermédiaire',
+            'Adulte danseur',
+            'Adulte sauteur',
+        ];
+
+        $adherents = Personne::whereHas('adhesions', function($query) use ($groupe_types, $saisonId) {
+            $query->whereHas('groupe', function($query) use ($groupe_types, $saisonId) {
+                // Filtrer selon les groupes et la saison active
+                $query->whereIn('type', $groupe_types)
+                      ->where('saison_id', $saisonId); // Filtrer par la saison active
+            })
+            ->where('etat', 'validé'); // Filtrer par l'état de l'adhésion (ici 'validée')
+        })->with(['adhesions' => function($query) use ($saisonId) {
+            // Ne charger que les adhésions de la saison active
+            $query->whereHas('groupe', function($query) use ($saisonId) {
+                $query->where('saison_id', $saisonId);
+            });
+        }])->get();
+
+        // Nom du fichier CSV
+        $fileName = date('Ymd') . '-adherents-adultes.csv';
+
+        // Entêtes pour le téléchargement du fichier CSV
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$fileName\"",
+        ];
+
+        // Callback pour générer le fichier CSV en mémoire
+        $callback = function() use ($adherents) {
+            $file = fopen('php://output', 'w');
+
+            fwrite($file, "\xEF\xBB\xBF"); // Ajoute le BOM UTF-8 (facultatif)
+
+            // Première ligne avec les noms des colonnes
+            fputcsv($file, ['Email', 'Nom', 'Prénom', 'Date de naissance', 'Sexe', 'Licence', 'Section', 'Groupe', 'Niveau', 'Photo', 'QR code'], ';');
+
+            // Parcours de la collection et ajout des lignes CSV
+            foreach ($adherents as $adherent) {
+                $creneaux = [];
+                $niveaux = [];
+                foreach ($adherent->adhesions as $adhesion) {
+                    $this->add($niveaux, $adhesion->groupe->type);
+                    $this->add($creneaux, $adhesion->groupe->creneaux[0]->jour);
+                }
+
+                fputcsv($file, [
+                    $adherent->email1,
+                    $adherent->nom,
+                    $adherent->prenom,
+                    $adherent->date_naissance,
+                    $adherent->sexe,
+                    $adherent->numero_licence,
+                    'Loisir',
+                    $this->toCreneau($creneaux),
+                    $this->toNiveau($niveaux),
+                    '.\\\\photos\\\\' . $this->getPhotoName($adherent),
+                    'https://manager.lyonglacepatinage.fr/fiche/' . $adherent->hash_code,
+                ], ';');
+            }
+
+            fclose($file);
+        };
+
+        // Retourne le fichier CSV en téléchargement
+        return response()->stream($callback, 200, $headers);
+    }
+
+    function add(array &$array, $value): void {
+        // Vérifier si la valeur n'existe pas déjà dans le tableau
+        if (!in_array($value, $array, true)) {
+            // Ajouter la valeur si elle n'est pas présente
+            $array[] = $value;
+        }
+    }
+
+    function toNiveau($niveaux) {
+        if (count($niveaux) === 1) {
+            // Si un seul niveau, on affecte directement cet élément
+            return $niveaux[0];
+        }
+        // Dictionnaire pour abréger les niveaux
+        $abreviations = [
+            'Adulte débutant'    => 'débutant',
+            'Adulte intermédiaire' => 'interm.',
+            'Adulte danseur'     => 'danseur',
+            'Adulte sauteur'     => 'sauteur'
+        ];
+    
+        // Priorités pour trier les niveaux
+        $priorite = [
+            'Adulte sauteur'       => 1,
+            'Adulte danseur'       => 2,
+            'Adulte intermédiaire' => 3,
+            'Adulte débutant'      => 4,
+            'PPG'                  => 5
+        ];
+    
+        // Trier les niveaux selon leur priorité
+        usort($niveaux, function($a, $b) use ($priorite) {
+            return $priorite[$a] <=> $priorite[$b];
+        });
+    
+        // On mappe les valeurs du tableau avec leurs abréviations
+        $abr_values = array_map(function($niveau) use ($abreviations) {
+            return $abreviations[$niveau] ?? $niveau; // Récupérer l'abréviation ou le niveau original si non trouvé
+        }, $niveaux);
+    
+        // On joint les valeurs abrégées avec une virgule et on préfixe par "Adulte"
+        return 'Adulte ' . implode(', ', $abr_values);
+    }
+
+    function toCreneau($creneaux) {
+        // Priorités pour trier les créneaux
+        $priorite = [
+            'Mardi'    => 1,
+            'Mercredi' => 2,
+            'Samedi'   => 3,
+        ];
+    
+        // Trier les créneaux selon leur priorité
+        usort($creneaux, function($a, $b) use ($priorite) {
+            return $priorite[$a] <=> $priorite[$b];
+        });
+    
+        // On joint les valeurs
+        return implode(', ', $creneaux);
+    }
+
     public function zip()
     {
         $saisonId = session('saison_id');

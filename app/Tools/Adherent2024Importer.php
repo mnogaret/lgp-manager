@@ -269,7 +269,7 @@ class Adherent2024Importer
         if ($raw_adherent['Liste d’attente'] === 'Oui') {
             return 'liste d’attente';
         }
-        $complet = ($raw_adherent['QM'] === 'Oui' || !empty($raw_adherent['CM'])) && ($raw_adherent['Autorisations'] !== 'Oui' || $raw_adherent['Autorisations'] !== 'Pas droit à l’image') && $raw_adherent['Photo'] !== 'Non';
+        $complet = ($raw_adherent['QM'] === 'Oui' || $raw_adherent['QM'] === 'Majeur' || !empty($raw_adherent['CM'])) && ($raw_adherent['Autorisations'] !== 'Oui' || $raw_adherent['Autorisations'] !== 'Pas droit à l’image') && $raw_adherent['Photo'] !== 'Non';
         $regle = $raw_adherent['Règlement'] === 'Acquitté' || $raw_adherent['Règlement'] === 'Reçu';
         if ($complet && $regle) {
             return "validé";
