@@ -22,16 +22,9 @@
     @foreach ($impressions as $impression)
         @php
             $sous_groupes = count($impression['groupes']) > 1;
-            $newpage = in_array($impression['nom'], ['Lame 1', 'Lame 2', 'Lame 3', 'Ados', 
-            'Adultes D&D du mardi', 
-                'Adultes D&D du vendredi', 
-                'Adultes D&D du samedi',
-                'Adultes I&S du mardi', 
-                'Adultes I&S du vendredi', 
-                'Adultes I&S du samedi',
-                'PPG du mardi 20h']);
+            $newpage = in_array($impression['nom'], ['Baby', 'PPG du mardi 20h45', 'PPG du mercredi']);
         @endphp
-        <div class="entete {{ $newpage ? 'newpage' : 'samepage' }}">
+        <div class="entete {{ $newpage ? 'samepage' : 'newpage' }}">
             <h1>Groupe {{ $impression['nom'] }}</h1>
             <p>
                 Le

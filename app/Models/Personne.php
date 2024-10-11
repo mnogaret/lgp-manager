@@ -43,7 +43,7 @@ class Personne extends Model
             $dateNaissance = Carbon::parse($dateNaissance);
 
             // Obtenez la date actuelle
-            $premierJuillet = Carbon::parse('2023-07-01');
+            $premierJuillet = Carbon::parse('2024-07-01');
 
             // Calculez la différence en années
             $age = $dateNaissance->diffInYears($premierJuillet);
