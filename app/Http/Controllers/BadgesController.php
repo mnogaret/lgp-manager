@@ -256,7 +256,7 @@ class BadgesController extends Controller
         return implode(', ', $creneaux);
     }
 
-    public function zip()
+    public function zip($offset = 0)
     {
         $saisonId = session('saison_id');
         if (!$saisonId) {
@@ -276,7 +276,12 @@ class BadgesController extends Controller
                     ->where('saison_id', $saisonId);
             })
             ->where('etat', 'validé');
-        })->with('documents')->get();
+        })
+        ->with('documents')
+        ->orderBy('nom')->orderBy('prenom')
+        ->limit(50)
+        ->offset($offset)
+        ->get();
 
         // Création du nom du fichier ZIP
         $zipFileName = date('Ymd') . '-photos.zip';
@@ -339,7 +344,7 @@ class BadgesController extends Controller
     }
 
     function getPhotoName($adherent) {
-        return '2024 - ' . $adherent->nom . ' ' . $adherent->prenom . ' - Photo.png';
+        return '2024 - ' . $adherent->nom . ' ' . $adherent->prenom . ' - Photo.jpg';
     }
 
     function downloadFile($fileId) {
@@ -416,7 +421,7 @@ class BadgesController extends Controller
     
         // Sauvegarder le résultat dans un autre fichier temporaire
         $outputFile = tempnam(sys_get_temp_dir(), 'output_');
-        $img->toPng()->save($outputFile);
+        $img->toJpeg()->save($outputFile);
     
         // Supprimer les fichiers temporaires
         unlink($tmpFile);

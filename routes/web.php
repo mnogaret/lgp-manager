@@ -63,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('badges/pdf', [BadgesController::class, 'pdf'])->name('badges.pdf');
     Route::get('badges/csv', [BadgesController::class, 'csv'])->name('badges.csv');
     Route::get('badges/adultes.csv', [BadgesController::class, 'adultes_csv'])->name('badges.adultes-csv');
-    Route::get('badges/zip', [BadgesController::class, 'zip'])->name('badges.zip');
+    Route::get('badges/zip/{offset?}', [BadgesController::class, 'zip'])->name('badges.zip');
 
     Route::get('/adhesion/{adhesion}/change-etat', [AdhesionController::class, 'changeEtat'])->name('adhesion.changeEtat');
 

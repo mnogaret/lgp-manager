@@ -89,7 +89,7 @@ class AdherentDriveScanner
 
     private function handle_file($name, $url, $date)
     {
-        if (preg_match('/^2024 - ([-A-ZÉÇÈ\'’ ]+) ([A-ZÉ][-a-zéïèë ]+([- ][A-ZÉ][-a-zéïèë ]+)*) - (Devis|Attestation Inscription|Licence|CNI|CAF|QM|Autorisations et Règlement|Autorisations|Assurance|CM|Attestation Sport|Règlement|QM et Règlement|QM et Autorisations|QM, Autorisations et Licence|Formulaire|Attestation - Recu|QM, Autorisations et Règlement|QM, CM et Règlement|QM, CM et Autorisations|Pass\'Sport|Carte Région|RIB|Remboursement|Permanence|Justificatif de départ|Pass\'Région|Règlement polaire|Formulaire et Autorisations|Formulaire et QM|Aide|Formulaire, QM et Autorisations|Photo)( - ([^\.]+))?\.(pdf|jpg|jpeg|JPG|png|PNG|bmp|docx|HEIC|heic)$/u', $name, $matches)) {
+        if (preg_match('/^2024 - ([-A-ZÉÇÊÈ\'’ ]+) ([A-ZÉÊ][-a-zéïèë, ]+([- ][A-ZÉÊ][-a-zéïèë, ]+)*) - (Devis|Attestation Inscription|Licence|CNI|CAF|QM|Autorisations et Règlement|Autorisations|Assurance|CM|Attestation Sport|Règlement|QM et Règlement|QM et Autorisations|QM, Autorisations et Licence|Formulaire|Attestation - Recu|QM, Autorisations et Règlement|QM, CM et Règlement|QM, CM et Autorisations|Pass\'Sport|Carte Région|RIB|Remboursement|Permanence|Justificatif de départ|Pass\'Région|Règlement polaire|Formulaire et Autorisations|Formulaire et QM|Aide|Formulaire, QM et Autorisations|Photo)( - ([^\.]+))?\.(pdf|jpg|jpeg|JPG|png|PNG|bmp|docx|HEIC|heic)$/u', $name, $matches)) {
             $nom = $matches[1];
             $prenom = $matches[2];
             $type = $matches[4];
