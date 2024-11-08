@@ -202,147 +202,121 @@ class GroupeController extends Controller
                 'groupe' => 'Baby',
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
-                'groupes' => ['2023-baby-mar', '2023-baby-ven'],
+                'groupes' => ['2024-baby'],
             ],
             [
-                'groupe' => 'Lame 1',
+                'groupe' => 'Initiation 1',
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
-                'groupes' => ['2023-lame1'],
-                'to' => 'M',
+                'groupes' => ['2024-initiation1'],
+                'to' => 'D',
             ],
             [
-                'groupe' => 'Lame 1',
+                'groupe' => 'Initiation 1',
                 'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
-                'groupes' => ['2023-lame1'],
-                'from' => 'M',
-            ],
-            [
-                'groupe' => 'Lame 1',
-                'niveau' => 'Lame 2',
-                'groupes' => ['2023-lame1'],
-            ],
-            [
-                'groupe' => 'Lame 1',
-                'niveau' => 'Lame 3',
-                'groupes' => ['2023-lame1'],
-            ],
-            [
-                'groupe' => 'Lame 1',
-                'niveau' => 'Lame 4',
-                'groupes' => ['2023-lame1'],
-            ],
-            [
-                'groupe' => 'Lame 1',
-                'niveau' => 'Lame 1',
-                'groupes' => ['2023-lame1'],
-            ],
-            [
-                'groupe' => 'Lame 2 à 8',
-                'niveau' => 'Lame 1',
-                'groupes' => ['2023-lame2+'],
-            ],
-            [
-                'groupe' => 'Lame 2 à 8',
-                'niveau' => 'Lame 2',
-                'niveau_null' => true,
-                'groupes' => ['2023-lame2+'],
+                'groupes' => ['2024-initiation1'],
+                'from' => 'D',
                 'to' => 'H',
             ],
             [
-                'groupe' => 'Lame 2 à 8',
-                'niveau' => 'Lame 2',
+                'groupe' => 'Initiation 1',
+                'niveau' => 'Patin Rouge',
                 'niveau_null' => true,
-                'groupes' => ['2023-lame2+'],
+                'groupes' => ['2024-initiation1'],
                 'from' => 'H',
             ],
             [
-                'groupe' => 'Lame 2 à 8',
+                'groupe' => 'Initiation 1',
+                'niveau' => 'Lame 1',
+                'groupes' => ['2024-initiation1'],
+            ],
+            [
+                'groupe' => 'Initiation 2',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2024-initiation2'],
+            ],
+            [
+                'groupe' => 'Initiation 2',
+                'niveau' => 'Lame 1',
+                'groupes' => ['2024-initiation2'],
+            ],
+            [
+                'groupe' => 'Initiation 2',
+                'niveau' => 'Lame 2',
+                'groupes' => ['2024-initiation2'],
+                'to' => 'K',
+            ],
+            [
+                'groupe' => 'Initiation 2',
+                'niveau' => 'Lame 2',
+                'groupes' => ['2024-initiation2'],
+                'from' => 'K',
+            ],
+            [
+                'groupe' => 'Initiation 2',
                 'niveau' => 'Lame 3',
-                'groupes' => ['2023-lame2+'],
+                'groupes' => ['2024-initiation2'],
             ],
             [
-                'groupe' => 'Lame 2 à 8',
+                'groupe' => 'Initiation 2',
                 'niveau' => 'Lame 4',
-                'groupes' => ['2023-lame2+'],
+                'groupes' => ['2024-initiation2'],
             ],
             [
-                'groupe' => 'Lame 2 à 8',
+                'groupe' => 'Initiation 2',
                 'niveau' => 'Lame 5',
-                'groupes' => ['2023-lame2+'],
+                'groupes' => ['2024-initiation2'],
             ],
             [
-                'groupe' => 'Lame 2 à 8',
-                'niveau' => 'Lame 6',
-                'groupes' => ['2023-lame2+'],
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2024-ados'],
+                'to' => 'E',
             ],
             [
-                'groupe' => 'Lame 2 à 8',
-                'niveau' => 'Lame 7',
-                'groupes' => ['2023-lame2+'],
-            ],
-            [
-                'groupe' => 'Lame 2 à 8',
-                'niveau' => 'Lame 8',
-                'groupes' => ['2023-lame2+'],
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'niveau_null' => true,
+                'groupes' => ['2024-ados'],
+                'from' => 'E',
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 1',
-                'niveau_null' => true,
-                'groupes' => ['2023-ados'],
-                'to' => 'G',
-            ],
-            [
-                'groupe' => 'Ados',
-                'niveau' => 'Lame 1',
-                'niveau_null' => true,
-                'groupes' => ['2023-ados'],
-                'from' => 'G',
-                'to' => 'P',
-            ],
-            [
-                'groupe' => 'Ados',
-                'niveau' => 'Lame 1',
-                'niveau_null' => true,
-                'groupes' => ['2023-ados'],
-                'from' => 'P',
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 2',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 3',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 4',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 5',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 6',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 7',
-                'groupes' => ['2023-ados'],
-            ],
-            [
-                'groupe' => 'Ados',
-                'niveau' => 'Lame 8',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
         ];
 
@@ -375,7 +349,7 @@ class GroupeController extends Controller
                             $subquery->where('niveau', $impression['niveau']);
                         });
                         if (isset($impression['niveau_null']) && $impression['niveau_null']) {
-                            $query->orWhereNull('niveau');
+                            $query->orWhereNull('niveau')->orWhere('niveau', 'Patin Bleu');
                         }
                     });
                 }
@@ -400,6 +374,7 @@ class GroupeController extends Controller
             }
         }
 
+        $impressions[] = [ 'niveau' => 'Patin Bleu' ];
         $impressions[] = [ 'niveau' => 'Patin Rouge' ];
         $impressions[] = [ 'niveau' => 'Lame 1' ];
         $impressions[] = [ 'niveau' => 'Lame 2' ];
@@ -408,7 +383,6 @@ class GroupeController extends Controller
         $impressions[] = [ 'niveau' => 'Lame 5' ];
         $impressions[] = [ 'niveau' => 'Lame 6' ];
         $impressions[] = [ 'niveau' => 'Lame 7' ];
-        $impressions[] = [ 'niveau' => 'Lame 8' ];
 
         $pdf = Pdf::loadView('groupe.lames_pdf', ['impressions' => $impressions]);
 

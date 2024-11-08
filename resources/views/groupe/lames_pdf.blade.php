@@ -1,5 +1,16 @@
 @php
     use Carbon\Carbon;
+    $niveau_suivant = [
+        'Patin Bleu' => 'Patin Rouge',
+        'Patin Rouge' => 'Lame 1',
+        'Lame 1' => 'Lame 2',
+        'Lame 2' => 'Lame 3',
+        'Lame 3' => 'Lame 4',
+        'Lame 4' => 'Lame 5',
+        'Lame 5' => 'Lame 6',
+        'Lame 6' => 'Lame 7',
+        'Lame 7' => 'Lame 8',
+    ];
 @endphp
 
 <!DOCTYPE html>
@@ -38,6 +49,7 @@
         } else {
             $titre = "Niveau " . $impression['niveau'];
         }
+        $titre .= " => " . $niveau_suivant[$impression['niveau']];
         @endphp
         <div class="entete {{ $newpage ? 'newpage' : 'samepage' }}">
             <h1>{{ $titre }}</h1>

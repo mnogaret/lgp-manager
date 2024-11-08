@@ -40,19 +40,19 @@ class PassageDeLameController extends Controller
         $impression_defs = [
             [
                 'groupe' => 'Baby',
-                'groupes' => ['2023-baby-mar', '2023-baby-ven'],
+                'groupes' => ['2024-baby'],
             ],
             [
-                'groupe' => 'Lame 1',
-                'groupes' => ['2023-lame1'],
+                'groupe' => 'Initiation 1',
+                'groupes' => ['2024-initiation1'],
             ],
             [
-                'groupe' => 'Lame 2 à 8',
-                'groupes' => ['2023-lame2+'],
+                'groupe' => 'Initiation 2',
+                'groupes' => ['2024-initiation2'],
             ],
             [
                 'groupe' => 'Ados',
-                'groupes' => ['2023-ados'],
+                'groupes' => ['2024-ados'],
             ],
         ];
 
