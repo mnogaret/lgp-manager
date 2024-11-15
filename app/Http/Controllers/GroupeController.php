@@ -200,31 +200,40 @@ class GroupeController extends Controller
         $impression_defs = [
             [
                 'groupe' => 'Baby',
-                'niveau' => 'Patin Rouge',
+                'niveau' => 'Patin Bleu',
                 'niveau_null' => true,
                 'groupes' => ['2024-baby'],
             ],
             [
-                'groupe' => 'Initiation 1',
+                'groupe' => 'Baby',
                 'niveau' => 'Patin Rouge',
+                'groupes' => ['2024-baby'],
+            ],
+            [
+                'groupe' => 'Initiation 1',
+                'niveau' => 'Patin Bleu',
                 'niveau_null' => true,
                 'groupes' => ['2024-initiation1'],
-                'to' => 'D',
+                'to' => 'G',
+            ],
+            [
+                'groupe' => 'Initiation 1',
+                'niveau' => 'Patin Bleu',
+                'niveau_null' => true,
+                'groupes' => ['2024-initiation1'],
+                'from' => 'G',
             ],
             [
                 'groupe' => 'Initiation 1',
                 'niveau' => 'Patin Rouge',
-                'niveau_null' => true,
                 'groupes' => ['2024-initiation1'],
-                'from' => 'D',
-                'to' => 'H',
+                'to' => 'G',
             ],
             [
                 'groupe' => 'Initiation 1',
                 'niveau' => 'Patin Rouge',
-                'niveau_null' => true,
                 'groupes' => ['2024-initiation1'],
-                'from' => 'H',
+                'from' => 'G',
             ],
             [
                 'groupe' => 'Initiation 1',
@@ -233,26 +242,17 @@ class GroupeController extends Controller
             ],
             [
                 'groupe' => 'Initiation 2',
-                'niveau' => 'Patin Rouge',
+                'niveau' => 'Lame 2',
                 'niveau_null' => true,
                 'groupes' => ['2024-initiation2'],
-            ],
-            [
-                'groupe' => 'Initiation 2',
-                'niveau' => 'Lame 1',
-                'groupes' => ['2024-initiation2'],
+                'to' => 'L',
             ],
             [
                 'groupe' => 'Initiation 2',
                 'niveau' => 'Lame 2',
+                'niveau_null' => true,
                 'groupes' => ['2024-initiation2'],
-                'to' => 'K',
-            ],
-            [
-                'groupe' => 'Initiation 2',
-                'niveau' => 'Lame 2',
-                'groupes' => ['2024-initiation2'],
-                'from' => 'K',
+                'from' => 'L',
             ],
             [
                 'groupe' => 'Initiation 2',
@@ -271,22 +271,25 @@ class GroupeController extends Controller
             ],
             [
                 'groupe' => 'Ados',
-                'niveau' => 'Patin Rouge',
+                'niveau' => 'Lame 1',
                 'niveau_null' => true,
                 'groupes' => ['2024-ados'],
-                'to' => 'E',
-            ],
-            [
-                'groupe' => 'Ados',
-                'niveau' => 'Patin Rouge',
-                'niveau_null' => true,
-                'groupes' => ['2024-ados'],
-                'from' => 'E',
+                'to' => 'D',
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 1',
+                'niveau_null' => true,
                 'groupes' => ['2024-ados'],
+                'from' => 'D',
+                'to' => 'M',
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Lame 1',
+                'niveau_null' => true,
+                'groupes' => ['2024-ados'],
+                'from' => 'M',
             ],
             [
                 'groupe' => 'Ados',
@@ -349,7 +352,8 @@ class GroupeController extends Controller
                             $subquery->where('niveau', $impression['niveau']);
                         });
                         if (isset($impression['niveau_null']) && $impression['niveau_null']) {
-                            $query->orWhereNull('niveau')->orWhere('niveau', 'Patin Bleu');
+//                            $query->orWhereNull('niveau')->orWhere('niveau', 'Patin Bleu');
+                            $query->orWhereNull('niveau');
                         }
                     });
                 }
