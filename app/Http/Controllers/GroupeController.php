@@ -271,25 +271,27 @@ class GroupeController extends Controller
             ],
             [
                 'groupe' => 'Ados',
-                'niveau' => 'Lame 1',
+                'niveau' => 'Patin Bleu',
                 'niveau_null' => true,
                 'groupes' => ['2024-ados'],
                 'to' => 'D',
             ],
             [
                 'groupe' => 'Ados',
-                'niveau' => 'Lame 1',
+                'niveau' => 'Patin Bleu',
                 'niveau_null' => true,
                 'groupes' => ['2024-ados'],
-                'from' => 'D',
-                'to' => 'M',
+                'from' => 'E',
+            ],
+            [
+                'groupe' => 'Ados',
+                'niveau' => 'Patin Rouge',
+                'groupes' => ['2024-ados'],
             ],
             [
                 'groupe' => 'Ados',
                 'niveau' => 'Lame 1',
-                'niveau_null' => true,
                 'groupes' => ['2024-ados'],
-                'from' => 'M',
             ],
             [
                 'groupe' => 'Ados',
