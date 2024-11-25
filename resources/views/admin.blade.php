@@ -40,11 +40,18 @@
             </form>
         </label>
     </div>
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports d’adhérents 2023</h4>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Scan des documents du drive 2024</h4>
+    <form action="{{ route('scan-drive-adherents') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="relative text-gray-500 focus-within:text-purple-600">
+            <button class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" type="submit">Scanner</button>
+        </div>
+    </form>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports de Passages de lame session Novembre 2024</h4>
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <label class="block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Depuis un extrait CSV du fichier de suivi</span>
-            <form action="{{ route('import-adherents-2023') }}" method="POST" enctype="multipart/form-data">
+            <span class="text-gray-700 dark:text-gray-400">Depuis un extrait CSV du fichier de suivi des passages de lame</span>
+            <form action="{{ route('import-passages') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="relative text-gray-500 focus-within:text-purple-600">
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="csv_file" type="file" name="csv_file" accept=".csv">
@@ -53,18 +60,11 @@
             </form>
         </label>
     </div>
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Scan des documents du drive 2023</h4>
-    <form action="{{ route('scan-drive-adherents') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <div class="relative text-gray-500 focus-within:text-purple-600">
-            <button class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" type="submit">Scanner</button>
-        </div>
-    </form>
-    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports de Passages de lame 2023</h4>
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">Imports d’adhérents 2023</h4>
     <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
         <label class="block text-sm">
-            <span class="text-gray-700 dark:text-gray-400">Depuis un extrait CSV du fichier de suivi des passages de lame</span>
-            <form action="{{ route('import-passages') }}" method="POST" enctype="multipart/form-data">
+            <span class="text-gray-700 dark:text-gray-400">Depuis un extrait CSV du fichier de suivi</span>
+            <form action="{{ route('import-adherents-2023') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="relative text-gray-500 focus-within:text-purple-600">
                     <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="csv_file" type="file" name="csv_file" accept=".csv">

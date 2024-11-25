@@ -38,7 +38,7 @@ class PassageDeLameImporter
                 'examinateur' => $raw_passage['Examinateur'],
                 'etat' => $this->format_etat($raw_passage['Résultat']),
                 'medaille' => $raw_passage['Médaille'],
-                'medaille_remise' => false,
+                'medaille_remise' => $raw_passage['Remise'] === 'Remise',
             ]);
         }
     }
@@ -78,12 +78,15 @@ class PassageDeLameImporter
         if (!$data['personne_id']) {
             return null;
         }
-        $passage = PassageDeLame::where('personne_id', $data['personne_id'])->first();
+        $passage = PassageDeLame::where('personne_id', $data['personne_id'])
+            ->where('lame_session', 'Novembre 2024')
+            ->first();
         if ($passage) {
             $this->merge_passage_de_lame($passage, $data);
             $passage->save();
             return $passage;
         }
+        $data['lame_session'] = 'Novembre 2024';
         $this->traces['newPassage']++;
         return PassageDeLame::create($data);
     }
@@ -98,7 +101,11 @@ class PassageDeLameImporter
                 $this->traces['update'][] = $attribut . " => " . print_r($data[$attribut], true);
                 $passage[$attribut] = $data[$attribut];
                 $change = true;
-            } else if (isset($passage[$attribut]) && isset($data[$attribut]) && $passage[$attribut] !== $data[$attribut]) {
+            } else if ($attribut === 'medaille_remise' && isset($passage[$attribut]) && isset($data[$attribut]) && $passage[$attribut] != $data[$attribut]) {
+                $this->traces['update'][] = $attribut . " " . print_r($passage[$attribut], true) . " => " . print_r($data[$attribut], true);
+                $passage[$attribut] = $data[$attribut];
+                $change = true;
+            } else if ($attribut !== 'medaille_remise' && isset($passage[$attribut]) && isset($data[$attribut]) && $passage[$attribut] !== $data[$attribut]) {
                 $this->traces['update'][] = $attribut . " " . print_r($passage[$attribut], true) . " => " . print_r($data[$attribut], true);
                 $passage[$attribut] = $data[$attribut];
                 $change = true;

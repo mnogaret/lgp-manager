@@ -78,11 +78,15 @@ class PassageDeLameController extends Controller
                     }]
                 )->whereHas('adhesions', function ($query) use ($id, $etats) {
                     $query->where('groupe_id', $id)->whereIn('etat', $etats);
-                })->whereHas('passages');
+                })->whereHas('passages', function ($query) {
+                    $query->where('lame_session', 'Novembre 2024'); // Filtre sur la session
+                });
                 $adherents = $q->orderBy('nom')->orderBy('prenom')->get();
 
                 foreach ($adherents as $adherent) {
-                    $passage = PassageDeLame::where('personne_id', $adherent->id)->firstOrFail();
+                    $passage = PassageDeLame::where('personne_id', $adherent->id)
+                        ->where('lame_session', 'Novembre 2024')
+                        ->firstOrFail();
                     $impression['resultats'][] = [
                         'adherent' => $adherent,
                         'passage' => $passage,

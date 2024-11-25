@@ -72,12 +72,14 @@
     $newpage = false;
     @endphp
     <div class="body">
-    @foreach ($impressions as $impression)
-        <x-pdf-lames-resultats-table :impression="$impression" />
-        @php
-            $newpage = true;
-        @endphp
-    @endforeach
+        @foreach ($impressions as $impression)
+            <div class="{{ $newpage ? 'newpage' : 'samepage' }}">
+                <x-pdf-lames-resultats-table :impression="$impression" />
+            </div>
+                @php
+                $newpage = true;
+                @endphp
+        @endforeach
     </div>
 </body>
 

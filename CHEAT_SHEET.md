@@ -28,3 +28,9 @@ cat ~/.ovhconfig
 
 Exemple de commande
 /usr/local/php8.2/bin/php artisan db:seed --class=Saison2024Seeder
+
+# Artisan migrate
+
+ssh lyonglac@51.68.11.192
+cd www3
+php artisan migrate

@@ -50,7 +50,21 @@
                     {{ $personne->prenom }}
                 </td>
                 <td class="centered">{{ $passage->date ? Carbon::parse($passage->date)->translatedFormat('l d F') : "" }}</td>
-                <td class="centered">{{ $passage->niveau }}</td>
+                <td class="centered">
+                    @php
+                        $medailleAffichee = $passage->medaille;
+                        if ($passage->etat == 'Échoué') {
+                            $medailles = ['Patin Bleu', 'Patin Rouge', 'Lame 1', 'Lame 2', 'Lame 3', 'Lame 4', 'Lame 5', 'Lame 6', 'Lame 7', 'Lame 8'];
+                            $medailleIndex = array_search($passage->medaille, $medailles);
+                            if ($medailleIndex !== false && $medailleIndex + 1 < count($medailles)) {
+                                $medailleAffichee = $medailles[$medailleIndex + 1];
+                            } else {
+                                $medailleAffichee = 'Erreur (' . $passage->medaille . ')';
+                            }
+                        }
+                    @endphp
+                    {{ $medailleAffichee }}
+                </td>
                 <td class="centered {{ $passage->etat == 'Passé' ? 'background-green' : ($passage->etat == 'Échoué' ? 'background-red' : '') }}">
                     @if ($passage->etat == 'Passé')
                         <span>Oui</span>

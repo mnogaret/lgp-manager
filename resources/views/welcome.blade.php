@@ -10,6 +10,10 @@
                 ],
             ],
             [
+                'title' => '25/11/2024',
+                'features' => ['Passage de lames 2024'],
+            ],
+            [
                 'title' => '29/09/2024',
                 'features' => ['Gestion des badges (génération csv et zip des photos)'],
             ],
