@@ -144,36 +144,31 @@ class GroupeController extends Controller
             })->get();
 
             $impression['adherents'] = [];
-            foreach ($groupe_codes as $groupe_code) {
-                $groupe = Groupe::where('code', $groupe_code)->firstOrFail();
-                $id = $groupe->id;
 
-                $q = Personne::with(
-                    ['adhesions' => function ($query) use ($id, $etats) {
-                        $query->where('groupe_id', $id)->whereIn('etat', $etats);
-                    }]
-                )->whereHas('adhesions', function ($query) use ($id, $etats) {
-                    $query->where('groupe_id', $id)->whereIn('etat', $etats);
-                });
-                if (isset($impression['niveau'])) {
-                    $q = $q->where(function ($query) use ($impression) {
-                        $query->where(function ($subquery) use ($impression) {
-                            if (isset($impression['niveau']) && count($impression['niveau']) > 0) {
-                                $subquery->whereIn('niveau', $impression['niveau']);
-                            }
-                        });
+            $ids = Groupe::whereIn('code', $groupe_codes)->pluck('id');
 
-                        if (isset($impression['niveau_null']) && $impression['niveau_null']) {
-                            $query->orWhereNull('niveau');
+            $q = Personne::with(
+                ['adhesions' => function ($query) use ($ids, $etats) {
+                    $query->whereIn('groupe_id', $ids)->whereIn('etat', $etats);
+                }]
+            )->whereHas('adhesions', function ($query) use ($ids, $etats) {
+                $query->whereIn('groupe_id', $ids)->whereIn('etat', $etats);
+            });
+            if (isset($impression['niveau'])) {
+                $q = $q->where(function ($query) use ($impression) {
+                    $query->where(function ($subquery) use ($impression) {
+                        if (isset($impression['niveau']) && count($impression['niveau']) > 0) {
+                            $subquery->whereIn('niveau', $impression['niveau']);
                         }
                     });
-                }
-                $adherents = $q->orderBy('nom')->orderBy('prenom')->get();
 
-                foreach ($adherents as $adherent) {
-                    $impression['adherents'][] = $adherent;
-                }
+                    if (isset($impression['niveau_null']) && $impression['niveau_null']) {
+                        $query->orWhereNull('niveau');
+                    }
+                });
             }
+            $impression['adherents'] = $q->orderBy('nom')->orderBy('prenom')->get();
+
             if (count($impression['adherents']) > 0) {
                 $impressions[] = $impression;
             }

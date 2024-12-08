@@ -63,10 +63,6 @@
             @if ($groupes)
                 <th>Groupe</th>
             @endif
-            @if ($niveaux)
-                <th>Âge</th>
-                <th>Niveau</th>
-            @endif
             <th>Inscription</th>
             <th>Téléphone</th>
         </tr>
@@ -96,17 +92,6 @@
                     <td
                         class="{{ array_key_exists($groupe, $groupe_color) ? 'background-' . $groupe_color[$groupe] : '' }}">
                         {{ $groupe }}
-                    </td>
-                @endif
-                @if ($niveaux)
-                    <td class="centered" data-order="{{ $personne->getAge() }}">{{ $personne->getAge() }}&nbsp;ans
-                    </td>
-                    <td class="centered">
-                        @if ($personne->niveau)
-                            <span class="niveau color-{{ $niveau_colors[$personne->niveau] }}">
-                                {{ $personne->niveau }}
-                            </span>
-                        @endif
                     </td>
                 @endif
                 <td class="centered">
