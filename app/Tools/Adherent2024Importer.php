@@ -219,6 +219,12 @@ class Adherent2024Importer
         if ($groupe === 'PPG - mercredi') {
             return ['2024-ppg-mer'];
         }
+        if ($groupe === 'Débutant - dimanche - 1er créneau') {
+            return ['2024-adulte-deb-dim1'];
+        }
+        if ($groupe === 'Débutant - dimanche - 2ème créneau') {
+            return ['2024-adulte-deb-dim2'];
+        }
         throw new Exception("Groupe inconnu " . $groupe);
     }
 

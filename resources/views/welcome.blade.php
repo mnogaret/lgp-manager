@@ -10,6 +10,10 @@
                 ],
             ],
             [
+                'title' => '27/12/2024',
+                'features' => ['Ajout des cours adulte du dimanche'],
+            ],
+            [
                 'title' => '25/11/2024',
                 'features' => ['Passage de lames 2024'],
             ],
