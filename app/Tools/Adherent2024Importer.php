@@ -225,6 +225,12 @@ class Adherent2024Importer
         if ($groupe === 'Débutant - dimanche - 2ème créneau') {
             return ['2024-adulte-deb-dim2'];
         }
+        if ($groupe === 'P1') {
+            return ['2024-p1'];
+        }
+        if ($groupe === 'P2') {
+            return ['2024-p2'];
+        }
         throw new Exception("Groupe inconnu " . $groupe);
     }
 
