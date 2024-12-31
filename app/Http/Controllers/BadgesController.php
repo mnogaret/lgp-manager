@@ -25,6 +25,8 @@ class BadgesController extends Controller
             '2024-initiation1',
             '2024-initiation2',
             '2024-ados',
+            '2024-p1',
+            '2024-p1',
         ];
 
         $adherents = Personne::whereHas('adhesions', function($query) use ($groupes, $saisonId) {
@@ -39,7 +41,7 @@ class BadgesController extends Controller
             $query->whereHas('groupe', function($query) use ($saisonId) {
                 $query->where('saison_id', $saisonId);
             });
-        }])->get();
+        }])->orderBy('nom')->orderBy('prenom')->get();
 
         // TODO ajouter la photo
 
@@ -58,6 +60,8 @@ class BadgesController extends Controller
             '2024-initiation1',
             '2024-initiation2',
             '2024-ados',
+            '2024-p1',
+            '2024-p2',
         ];
 
         $adherents = Personne::whereHas('adhesions', function($query) use ($groupes, $saisonId) {
@@ -72,7 +76,7 @@ class BadgesController extends Controller
             $query->whereHas('groupe', function($query) use ($saisonId) {
                 $query->where('saison_id', $saisonId);
             });
-        }])->get();
+        }])->orderBy('nom')->orderBy('prenom')->get();
 
         // Nom du fichier CSV
         $fileName = date('Ymd') . '-adherents.csv';
@@ -144,7 +148,7 @@ class BadgesController extends Controller
             $query->whereHas('groupe', function($query) use ($saisonId) {
                 $query->where('saison_id', $saisonId);
             });
-        }])->get();
+        }])->orderBy('nom')->orderBy('prenom')->get();
 
         // Nom du fichier CSV
         $fileName = date('Ymd') . '-adherents-adultes.csv';
@@ -268,6 +272,8 @@ class BadgesController extends Controller
             '2024-initiation1',
             '2024-initiation2',
             '2024-ados',
+            '2024-p1',
+            '2024-p2',
         ];
 
         $adherents = Personne::whereHas('adhesions', function($query) use ($groupes, $saisonId) {
