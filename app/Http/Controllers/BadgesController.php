@@ -75,7 +75,7 @@ class BadgesController extends Controller
             // Ne charger que les adhésions de la saison active
             $query->whereHas('groupe', function($query) use ($saisonId) {
                 $query->where('saison_id', $saisonId);
-            });
+            })->where('etat', 'validé');
         }])->orderBy('nom')->orderBy('prenom')->get();
 
         // Nom du fichier CSV
@@ -106,7 +106,7 @@ class BadgesController extends Controller
                         $adherent->date_naissance,
                         $adherent->sexe,
                         $adherent->numero_licence,
-                        'Loisir',
+                        in_array($adhesion->groupe->code, ['2024-p1', '2024-p2'])  ? 'Perfectionnement' : 'Loisir',
                         $adhesion->groupe->nom,
                         $adherent->niveau ?? 'Débutant',
                         '.\\\\photos\\\\' . $this->getPhotoName($adherent),

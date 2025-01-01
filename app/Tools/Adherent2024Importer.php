@@ -386,7 +386,7 @@ class Adherent2024Importer
         }
 
         // Modifications affichées mais non appliquées
-        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'date_certificat_medical', 'nom_assurance', 'numero_assurance', 'droit_image', 'numero_licence', 'foyer_id'] as $attribut) {
+        foreach (['adresse_postale', 'code_postal', 'ville', 'sexe', 'nationalite', 'date_naissance', 'ville_naissance', 'date_certificat_medical', 'nom_assurance', 'numero_assurance', 'droit_image', 'foyer_id'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $personne[$attribut] = $data[$attribut];
                 $change = true;
@@ -397,7 +397,7 @@ class Adherent2024Importer
         }
 
         // Modifications appliquées
-        foreach (['niveau', 'hash_code', 'badge'] as $attribut) {
+        foreach (['niveau', 'hash_code', 'badge', 'numero_licence'] as $attribut) {
             if (!isset($personne[$attribut]) && isset($data[$attribut])) {
                 $this->traces['update'][] = $attribut . " => " . print_r($data[$attribut], true);
                 $personne[$attribut] = $data[$attribut];
