@@ -136,7 +136,7 @@ class BadgesController extends Controller
             'Adulte sauteur',
         ];
 
-        $adherents = Personne::whereHas('adhesions', function($query) use ($groupe_types, $saisonId) {
+        $adherents = Personne::whereNotNull('numero_licence')->where('numero_licence', '!=', '')->whereHas('adhesions', function($query) use ($groupe_types, $saisonId) {
             $query->whereHas('groupe', function($query) use ($groupe_types, $saisonId) {
                 // Filtrer selon les groupes et la saison active
                 $query->whereIn('type', $groupe_types)
