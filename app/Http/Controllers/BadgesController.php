@@ -249,6 +249,7 @@ class BadgesController extends Controller
             'Mardi'    => 1,
             'Mercredi' => 2,
             'Samedi'   => 3,
+            'Dimanche' => 4,
         ];
     
         // Trier les créneaux selon leur priorité
