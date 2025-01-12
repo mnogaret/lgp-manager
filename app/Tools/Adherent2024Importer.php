@@ -225,6 +225,9 @@ class Adherent2024Importer
         if ($groupe === 'Débutant - dimanche - 2ème créneau') {
             return ['2024-adulte-deb-dim2'];
         }
+        if ($groupe === 'Intermédiaire - dimanche') {
+            return ['2024-adulte-int-dim'];
+        }
         if ($groupe === 'P1') {
             return ['2024-p1'];
         }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('personne', function (Blueprint $table) {
             $table->string('hash_code', 64)->nullable(); // Longueur du hash SHA-256 (64 caractères)
-            $table->enum('badge', ['Non', 'À remettre', 'Remis'])->default('Non');
+            $table->enum('badge', ['Non', 'À imprimer', 'À remettre', 'Remis'])->default('Non');
         });
     }
 

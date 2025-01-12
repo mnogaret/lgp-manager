@@ -119,6 +119,14 @@ class GroupeController extends Controller
                 'groupes' => ['2024-adulte-sau-sam'],
             ],
             [
+                'nom' => 'Adultes D&I du dimanche',
+                'groupes' => ['2024-adulte-deb-dim1', '2024-adulte-int-dim'],
+            ],
+            [
+                'nom' => 'Adultes D du dimanche',
+                'groupes' => ['2024-adulte-deb-dim2'],
+            ],
+            [
                 'nom' => 'PPG du mardi 19h45',
                 'groupes' => ['2024-ppg-mar-1'],
             ],
